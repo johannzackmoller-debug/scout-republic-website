@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scout Republic — Talent Discovery Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:  { DEFAULT: '#1B4F72', light: '#2471A3', dark: '#154360' },
+            amber: { DEFAULT: '#F39C12', light: '#F5B041', dark: '#D68910' },
+            sage:  { DEFAULT: '#27AE60', light: '#2ECC71', dark: '#1E8449' },
+            slate: { DEFAULT: '#85929E', light: '#AEB6BF', dark: '#566573' },
+            mist:  { DEFAULT: '#D6EAF8', dark: '#AED6F1' },
+            ink:   { DEFAULT: '#2C3E50', light: '#34495E' },
+          },
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    html { scroll-behavior: smooth; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .nav-link { position: relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:2px; background:#F39C12; transition:width .25s; }
+    .nav-link:hover::after, .nav-link.active::after { width:100%; }
+    .hero-gradient { background: linear-gradient(135deg, #154360 0%, #1B4F72 50%, #2471A3 100%); }
+    .card-hover { transition: transform .2s, box-shadow .2s; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(27,79,114,.15); }
+    .amber-border-left { border-left: 4px solid #F39C12; }
+    .fade-in { animation: fadeIn .4s ease; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .step-connector { position: relative; }
+    .step-connector::after { content:''; position:absolute; top:28px; left:calc(50% + 28px); width:calc(100% - 56px); height:2px; background:#D6EAF8; }
+    @media (max-width: 768px) { .step-connector::after { display:none; } }
+    input:focus, textarea:focus, select:focus { outline: 2px solid #F39C12; outline-offset: 1px; }
+    .accordion-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+    .accordion-body.open { max-height: 500px; }
+    .mobile-menu { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+    .mobile-menu.open { max-height: 600px; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #1B4F72; border-radius: 3px; }
+  </style>
+</head>
+<body class="font-sans bg-white text-ink antialiased">
+
+<!-- ═══════════════════════════════════ NAV ═══════════════════════════════════ -->
+<nav class="sticky top-0 z-50 bg-white shadow-md border-b-2 border-amber" id="mainNav">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <button onclick="showPage('home')" class="flex items-center gap-3 focus:outline-none group">
+        <!-- Shield icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 44" width="32" height="39" aria-hidden="true" class="flex-shrink-0 transition-transform group-hover:scale-105">
+          <path d="M 0 8 L 36 8 L 36 28 Q 36 40 18 44 Q 0 40 0 28 Z" fill="#1B4F72"/>
+          <path d="M 2 10 L 34 10 L 34 28 Q 34 38 18 42 Q 2 38 2 28 Z" fill="none" stroke="#2471A3" stroke-width="0.8"/>
+          <rect x="0" y="8" width="36" height="6" fill="#F39C12"/>
+          <polygon points="18,16 20,23 28,23 22,27 24,34 18,30 12,34 14,27 9,23 16,23" fill="#F39C12"/>
+        </svg>
+        <!-- Wordmark -->
+        <div class="leading-none">
+          <div class="font-black text-navy text-lg tracking-tight leading-none">SCOUT</div>
+          <div class="text-[10px] text-amber font-bold tracking-[0.22em] leading-none mt-[3px]">REPUBLIC</div>
+        </div>
+      </button>
+
+      <!-- Desktop Nav -->
+      <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-ink">
+        <button onclick="showPage('how')" class="nav-link hover:text-navy transition-colors">How It Works</button>
+        <button onclick="showPage('parents')" class="nav-link hover:text-navy transition-colors">For Parents</button>
+        <button onclick="showPage('scouts')" class="nav-link hover:text-navy transition-colors">For Scouts & Schools</button>
+        <button onclick="showPage('safety')" class="nav-link hover:text-navy transition-colors">Safety & Privacy</button>
+        <button onclick="showPage('stories')" class="nav-link hover:text-navy transition-colors">Success Stories</button>
+        <button onclick="showPage('faq')" class="nav-link hover:text-navy transition-colors">FAQ</button>
+      </div>
+
+      <!-- Desktop CTAs -->
+      <div class="hidden lg:flex items-center gap-3">
+        <button onclick="showPage('apply-scout')" class="border-2 border-navy text-navy hover:bg-navy hover:text-white font-semibold px-4 py-2 rounded-lg text-sm transition-all">Scout / School Access</button>
+        <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-5 py-2 rounded-lg text-sm transition-all shadow-sm">Register Your Child</button>
+      </div>
+
+      <!-- Hamburger -->
+      <button onclick="toggleMobile()" class="lg:hidden p-2 rounded-lg text-navy hover:bg-mist" id="hamburgerBtn" aria-label="Menu">
+        <svg id="iconMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="iconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu lg:hidden">
+      <div class="py-3 space-y-1 border-t border-gray-100">
+        <button onclick="showPage('how');toggleMobile()" class="block w-full text-left px-4 py-3 text-sm font-medium text-ink hover:bg-mist rounded-lg">How It Works</button>
+        <button onclick="showPage('parents');toggleMobile()" class="block w-full text-left px-4 py-3 text-sm font-medium text-ink hover:bg-mist rounded-lg">For Parents</button>
+        <button onclick="showPage('scouts');toggleMobile()" class="block w-full text-left px-4 py-3 text-sm font-medium text-ink hover:bg-mist rounded-lg">For Scouts & Schools</button>
+        <button onclick="showPage('safety');toggleMobile()" class="block w-full text-left px-4 py-3 text-sm font-medium text-ink hover:bg-mist rounded-lg">Safety & Privacy</button>
+        <button onclick="showPage('stories');toggleMobile()" class="block w-full text-left px-4 py-3 text-sm font-medium text-ink hover:bg-mist rounded-lg">Success Stories</button>
+        <button onclick="showPage('faq');toggleMobile()" class="block w-full text-left px-4 py-3 text-sm font-medium text-ink hover:bg-mist rounded-lg">FAQ</button>
+        <div class="pt-2 pb-1 px-4 space-y-2">
+          <button onclick="showPage('apply-scout');toggleMobile()" class="w-full border-2 border-navy text-navy font-semibold py-2.5 rounded-lg text-sm">Scout / School Access</button>
+          <button onclick="showPage('apply-parent');toggleMobile()" class="w-full bg-amber text-white font-bold py-2.5 rounded-lg text-sm">Register Your Child</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════ PAGE: HOME ══════════════════════════════════ -->
+<div id="page-home" class="page active fade-in">
+
+  <!-- Hero -->
+  <section class="hero-gradient text-white min-h-[88vh] flex items-center relative overflow-hidden">
+    <!-- Decorative circles -->
+    <div class="absolute top-0 right-0 w-96 h-96 rounded-full bg-white opacity-5 translate-x-1/3 -translate-y-1/3"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-amber opacity-10 -translate-x-1/3 translate-y-1/3"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <!-- Hero logo badge -->
+          <div class="flex items-center gap-4 mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 44" width="56" height="68" aria-label="Scout Republic" class="flex-shrink-0 drop-shadow-lg">
+              <path d="M 0 8 L 36 8 L 36 28 Q 36 40 18 44 Q 0 40 0 28 Z" fill="white" fill-opacity="0.15"/>
+              <path d="M 0 8 L 36 8 L 36 28 Q 36 40 18 44 Q 0 40 0 28 Z" fill="none" stroke="white" stroke-opacity="0.4" stroke-width="0.8"/>
+              <rect x="0" y="8" width="36" height="6" fill="#F39C12"/>
+              <polygon points="18,16 20,23 28,23 22,27 24,34 18,30 12,34 14,27 9,23 16,23" fill="#F39C12"/>
+            </svg>
+            <div>
+              <div class="inline-flex items-center gap-2 bg-white bg-opacity-15 border border-white border-opacity-25 rounded-full px-4 py-2 text-sm font-medium">
+                <span class="w-2 h-2 bg-sage rounded-full animate-pulse"></span>
+                South Africa's first child-safe talent discovery platform
+              </div>
+            </div>
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6">
+            Every child<br/>
+            <span class="text-amber">deserves to be</span><br/>
+            seen.
+          </h1>
+          <p class="text-lg text-blue-100 leading-relaxed mb-8 max-w-lg">
+            Scout Republic connects talented young athletes from rural South Africa with vetted scouts, coaches, and academies who can unlock their future — safely, and with full parental control.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-8 py-4 rounded-xl text-base transition-all shadow-lg hover:shadow-xl">
+              Register Your Child — Free
+            </button>
+            <button onclick="showPage('how')" class="bg-white bg-opacity-15 hover:bg-opacity-25 border border-white border-opacity-30 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all">
+              See How It Works →
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats panel -->
+        <div class="hidden lg:block">
+          <div class="bg-white bg-opacity-10 backdrop-blur border border-white border-opacity-20 rounded-2xl p-8">
+            <h3 class="text-white font-bold text-lg mb-6">Scout Republic by the numbers</h3>
+            <div class="grid grid-cols-2 gap-5">
+              <div class="text-center bg-white bg-opacity-10 rounded-xl p-4">
+                <div class="text-3xl font-black text-amber">9</div>
+                <div class="text-blue-100 text-sm mt-1">Provinces Covered</div>
+              </div>
+              <div class="text-center bg-white bg-opacity-10 rounded-xl p-4">
+                <div class="text-3xl font-black text-amber">7</div>
+                <div class="text-blue-100 text-sm mt-1">Sports (Phase 1)</div>
+              </div>
+              <div class="text-center bg-white bg-opacity-10 rounded-xl p-4">
+                <div class="text-3xl font-black text-amber">100%</div>
+                <div class="text-blue-100 text-sm mt-1">Parent-Controlled</div>
+              </div>
+              <div class="text-center bg-white bg-opacity-10 rounded-xl p-4">
+                <div class="text-3xl font-black text-amber">Free</div>
+                <div class="text-blue-100 text-sm mt-1">For All Families</div>
+              </div>
+            </div>
+            <div class="mt-6 pt-6 border-t border-white border-opacity-20">
+              <div class="flex items-center gap-2 text-blue-100 text-sm">
+                <svg class="w-4 h-4 text-sage flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                POPIA compliant — your data is protected by South African law
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Strip -->
+  <section class="bg-navy py-5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-white">
+        <div class="flex items-center justify-center gap-2">
+          <span class="text-amber text-xl">🔒</span>
+          <span class="text-sm font-semibold">No Public Profiles</span>
+        </div>
+        <div class="flex items-center justify-center gap-2">
+          <span class="text-amber text-xl">✅</span>
+          <span class="text-sm font-semibold">Vetted Scouts Only</span>
+        </div>
+        <div class="flex items-center justify-center gap-2">
+          <span class="text-amber text-xl">🇿🇦</span>
+          <span class="text-sm font-semibold">100% South African</span>
+        </div>
+        <div class="flex items-center justify-center gap-2">
+          <span class="text-amber text-xl">👨‍👩‍👧</span>
+          <span class="text-sm font-semibold">Parent-Controlled</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works — home preview -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl sm:text-4xl font-black text-navy mb-4">How Scout Republic Works</h2>
+        <p class="text-slate text-lg max-w-xl mx-auto">A simple, safe process from registration to opportunity.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8 relative">
+        <div class="text-center step-connector">
+          <div class="w-14 h-14 bg-mist rounded-2xl flex items-center justify-center mx-auto mb-5 border-2 border-mist-dark">
+            <span class="text-navy font-black text-2xl">1</span>
+          </div>
+          <h3 class="font-bold text-navy text-lg mb-3">Parents Register</h3>
+          <p class="text-slate text-sm leading-relaxed">Create a free account, confirm your consent, and build your child's verified athlete profile in minutes — step by step.</p>
+        </div>
+        <div class="text-center step-connector">
+          <div class="w-14 h-14 bg-mist rounded-2xl flex items-center justify-center mx-auto mb-5 border-2 border-mist-dark">
+            <span class="text-navy font-black text-2xl">2</span>
+          </div>
+          <h3 class="font-bold text-navy text-lg mb-3">Scouts Apply</h3>
+          <p class="text-slate text-sm leading-relaxed">Coaches, schools, and academies apply for verified access. We check their identity and organisation before granting entry. No approval, no access.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-14 h-14 bg-amber bg-opacity-20 rounded-2xl flex items-center justify-center mx-auto mb-5 border-2 border-amber border-opacity-40">
+            <span class="text-amber-dark font-black text-2xl">3</span>
+          </div>
+          <h3 class="font-bold text-navy text-lg mb-3">Talent Gets Seen</h3>
+          <p class="text-slate text-sm leading-relaxed">Approved scouts search, discover, and send contact requests — through the parent only. Your child's personal details are never shared directly.</p>
+        </div>
+      </div>
+      <div class="text-center mt-12">
+        <button onclick="showPage('how')" class="text-navy font-semibold hover:text-amber transition-colors underline underline-offset-4">Read the full process →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sports Grid -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl sm:text-3xl font-black text-navy mb-3">Sports We Cover (Phase 1)</h2>
+        <p class="text-slate">More sports added in Phase 2 based on demand.</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+        <div class="bg-white rounded-xl p-4 text-center card-hover border border-gray-100 shadow-sm"><div class="text-3xl mb-2">⚽</div><div class="text-xs font-semibold text-navy">Football</div></div>
+        <div class="bg-white rounded-xl p-4 text-center card-hover border border-gray-100 shadow-sm"><div class="text-3xl mb-2">🏉</div><div class="text-xs font-semibold text-navy">Rugby</div></div>
+        <div class="bg-white rounded-xl p-4 text-center card-hover border border-gray-100 shadow-sm"><div class="text-3xl mb-2">🏃</div><div class="text-xs font-semibold text-navy">Athletics</div></div>
+        <div class="bg-white rounded-xl p-4 text-center card-hover border border-gray-100 shadow-sm"><div class="text-3xl mb-2">🏏</div><div class="text-xs font-semibold text-navy">Cricket</div></div>
+        <div class="bg-white rounded-xl p-4 text-center card-hover border border-gray-100 shadow-sm"><div class="text-3xl mb-2">🏐</div><div class="text-xs font-semibold text-navy">Netball</div></div>
+        <div class="bg-white rounded-xl p-4 text-center card-hover border border-gray-100 shadow-sm"><div class="text-3xl mb-2">🏊</div><div class="text-xs font-semibold text-navy">Swimming</div></div>
+        <div class="bg-white rounded-xl p-4 text-center card-hover border border-gray-100 shadow-sm"><div class="text-3xl mb-2">🎾</div><div class="text-xs font-semibold text-navy">Tennis</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Scout Republic -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <div class="inline-block bg-amber bg-opacity-15 text-amber-dark font-bold text-sm px-4 py-1.5 rounded-full mb-5">The Problem We're Solving</div>
+          <h2 class="text-3xl sm:text-4xl font-black text-navy mb-6 leading-tight">South Africa produces world-class athletes.<br/><span class="text-amber">Most are never found.</span></h2>
+          <p class="text-ink leading-relaxed mb-6">Thousands of gifted young athletes in rural and township schools never get seen by the scouts and coaches who could change their lives. The barriers are structural — not about talent.</p>
+          <div class="space-y-4">
+            <div class="flex gap-3 items-start">
+              <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-red-500 text-xs font-bold">✗</span></div>
+              <p class="text-slate text-sm">Rural schools lack the networks and relationships that urban schools have with academies and scouts.</p>
+            </div>
+            <div class="flex gap-3 items-start">
+              <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-red-500 text-xs font-bold">✗</span></div>
+              <p class="text-slate text-sm">Parents want to help their child — but rightly fear putting a minor's information online unsafely.</p>
+            </div>
+            <div class="flex gap-3 items-start">
+              <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-red-500 text-xs font-bold">✗</span></div>
+              <p class="text-slate text-sm">Scouts travel to under-resourced areas without any data on potential talent. It's inefficient and incomplete.</p>
+            </div>
+            <div class="flex gap-3 items-start mt-6">
+              <div class="w-6 h-6 bg-sage bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-sage text-xs font-bold">✓</span></div>
+              <p class="text-ink text-sm font-semibold">Scout Republic creates a verified, safe channel between rural communities and the formal sports world.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-mist rounded-2xl p-8 border border-mist-dark">
+          <h3 class="font-bold text-navy mb-6 text-lg">What makes us different</h3>
+          <div class="space-y-5">
+            <div class="flex gap-4 items-start">
+              <div class="w-10 h-10 bg-navy rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-amber text-lg">🔒</span></div>
+              <div><div class="font-semibold text-navy text-sm mb-1">Privacy by design</div><div class="text-slate text-xs">No child profile is ever publicly searchable. Privacy is baked in, not bolted on.</div></div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <div class="w-10 h-10 bg-navy rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-amber text-lg">✅</span></div>
+              <div><div class="font-semibold text-navy text-sm mb-1">Every scout is verified by a human</div><div class="text-slate text-xs">We personally check every scout application before granting any access.</div></div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <div class="w-10 h-10 bg-navy rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-amber text-lg">👨‍👩‍👧</span></div>
+              <div><div class="font-semibold text-navy text-sm mb-1">Parent always in control</div><div class="text-slate text-xs">Scouts can only reach you, the parent. Your child's contact details are never shared.</div></div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <div class="w-10 h-10 bg-navy rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-amber text-lg">📋</span></div>
+              <div><div class="font-semibold text-navy text-sm mb-1">Full audit trail</div><div class="text-slate text-xs">Every profile view is logged. You can see who viewed your child's profile and when.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="hero-gradient py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">Is your child a future Springbok?<br/>A future Bafana Bafana star?</h2>
+      <p class="text-blue-100 text-lg mb-8">They deserve to be seen. Registration is free, safe, and takes less than 10 minutes.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg">Register Your Child — Free</button>
+        <button onclick="showPage('apply-scout')" class="border-2 border-white text-white hover:bg-white hover:text-navy font-semibold px-8 py-4 rounded-xl transition-all">Apply for Scout Access</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer preview -->
+  <footer class="bg-ink text-gray-300 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 44" width="30" height="37" aria-hidden="true" class="flex-shrink-0">
+              <path d="M 0 8 L 36 8 L 36 28 Q 36 40 18 44 Q 0 40 0 28 Z" fill="white" fill-opacity="0.15"/>
+              <path d="M 0 8 L 36 8 L 36 28 Q 36 40 18 44 Q 0 40 0 28 Z" fill="none" stroke="white" stroke-opacity="0.3" stroke-width="0.8"/>
+              <rect x="0" y="8" width="36" height="6" fill="#F39C12"/>
+              <polygon points="18,16 20,23 28,23 22,27 24,34 18,30 12,34 14,27 9,23 16,23" fill="#F39C12"/>
+            </svg>
+            <div class="leading-none">
+              <div class="font-black text-white text-lg leading-none">SCOUT</div>
+              <div class="text-[10px] text-amber font-bold tracking-[0.22em] leading-none mt-[3px]">REPUBLIC</div>
+            </div>
+          </div>
+          <p class="text-sm leading-relaxed text-gray-400 max-w-xs">Connecting rural South African sporting talent with verified scouts, coaches, and academies. Safely. Always.</p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4">Platform</h4>
+          <div class="space-y-2 text-sm">
+            <button onclick="showPage('how')" class="block hover:text-amber transition-colors">How It Works</button>
+            <button onclick="showPage('parents')" class="block hover:text-amber transition-colors">For Parents</button>
+            <button onclick="showPage('scouts')" class="block hover:text-amber transition-colors">For Scouts</button>
+            <button onclick="showPage('safety')" class="block hover:text-amber transition-colors">Safety & Privacy</button>
+            <button onclick="showPage('faq')" class="block hover:text-amber transition-colors">FAQ</button>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4">Legal & Contact</h4>
+          <div class="space-y-2 text-sm">
+            <button onclick="showPage('contact')" class="block hover:text-amber transition-colors">Contact Us</button>
+            <a href="#" class="block hover:text-amber transition-colors">Privacy Policy</a>
+            <a href="#" class="block hover:text-amber transition-colors">Terms of Use</a>
+            <a href="#" class="block hover:text-amber transition-colors">Report a Concern</a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+        <span>© 2026 Scout Republic (Pty) Ltd · Registered in South Africa</span>
+        <span>POPIA Compliant · Child Protection Policy Active</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ════════════════════════ PAGE: HOW IT WORKS ═══════════════════════════════ -->
+<div id="page-how" class="page fade-in">
+  <section class="hero-gradient text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl sm:text-5xl font-black mb-4">How It Works</h1>
+      <p class="text-blue-100 text-lg">A clear, safe, step-by-step process for both families and sports professionals.</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="mb-14">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-10 h-10 bg-amber bg-opacity-20 rounded-xl flex items-center justify-center"><span class="text-2xl">👨‍👩‍👧</span></div>
+          <h2 class="text-2xl font-black text-navy">For Parents & Guardians</h2>
+        </div>
+        <div class="space-y-4">
+          <div class="flex gap-5 p-5 bg-gray-50 rounded-xl border border-gray-100">
+            <div class="w-8 h-8 bg-navy rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">1</div>
+            <div><div class="font-bold text-navy mb-1">Create a free parent account</div><div class="text-slate text-sm">Register with your email and cellphone. We verify both with a one-time PIN to confirm your identity.</div></div>
+          </div>
+          <div class="flex gap-5 p-5 bg-gray-50 rounded-xl border border-gray-100">
+            <div class="w-8 h-8 bg-navy rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">2</div>
+            <div><div class="font-bold text-navy mb-1">Give your consent</div><div class="text-slate text-sm">We'll explain clearly — in plain language, not legal jargon — exactly what data we collect, why we collect it, and what your rights are under POPIA.</div></div>
+          </div>
+          <div class="flex gap-5 p-5 bg-gray-50 rounded-xl border border-gray-100">
+            <div class="w-8 h-8 bg-navy rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">3</div>
+            <div><div class="font-bold text-navy mb-1">Build your child's profile</div><div class="text-slate text-sm">Upload their sport, province, school type, achievements, a photo, and a short video link (YouTube or Google Drive). A step-by-step wizard guides you through.</div></div>
+          </div>
+          <div class="flex gap-5 p-5 bg-gray-50 rounded-xl border border-gray-100">
+            <div class="w-8 h-8 bg-navy rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">4</div>
+            <div><div class="font-bold text-navy mb-1">We review every profile</div><div class="text-slate text-sm">Our admin team reviews the profile within 48 hours before any scout can see it. We check the content is appropriate and complete.</div></div>
+          </div>
+          <div class="flex gap-5 p-5 bg-amber bg-opacity-10 rounded-xl border border-amber border-opacity-30">
+            <div class="w-8 h-8 bg-amber rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">5</div>
+            <div><div class="font-bold text-navy mb-1">You stay in control — always</div><div class="text-slate text-sm">Turn visibility on or off at any time. You see who views the profile. You approve every contact request before a scout gets your details. You can delete everything at any time.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-10 h-10 bg-mist rounded-xl flex items-center justify-center"><span class="text-2xl">🏫</span></div>
+          <h2 class="text-2xl font-black text-navy">For Scouts, Schools & Coaches</h2>
+        </div>
+        <div class="space-y-4">
+          <div class="flex gap-5 p-5 bg-gray-50 rounded-xl border border-gray-100">
+            <div class="w-8 h-8 bg-navy rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">1</div>
+            <div><div class="font-bold text-navy mb-1">Apply for verified access</div><div class="text-slate text-sm">Submit your application with your organisation details, role, and reason for access. We may ask for ID and proof of employment or federation affiliation.</div></div>
+          </div>
+          <div class="flex gap-5 p-5 bg-gray-50 rounded-xl border border-gray-100">
+            <div class="w-8 h-8 bg-navy rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">2</div>
+            <div><div class="font-bold text-navy mb-1">We verify you</div><div class="text-slate text-sm">A human reviews your application within 5 business days. We check your identity and organisation. If approved, you receive a welcome email with your login link.</div></div>
+          </div>
+          <div class="flex gap-5 p-5 bg-gray-50 rounded-xl border border-gray-100">
+            <div class="w-8 h-8 bg-navy rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">3</div>
+            <div><div class="font-bold text-navy mb-1">Search and discover</div><div class="text-slate text-sm">Filter athletes by sport, province, age group, position, and achievement level. All activity is logged for child protection purposes.</div></div>
+          </div>
+          <div class="flex gap-5 p-5 bg-gray-50 rounded-xl border border-gray-100">
+            <div class="w-8 h-8 bg-navy rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">4</div>
+            <div><div class="font-bold text-navy mb-1">Request contact — through the parent</div><div class="text-slate text-sm">Send a message through the platform. It goes directly to the parent or guardian — never to the child. The parent decides whether to share their contact details with you.</div></div>
+          </div>
+          <div class="flex gap-5 p-5 bg-mist rounded-xl border border-mist-dark">
+            <div class="w-8 h-8 bg-sage rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">5</div>
+            <div><div class="font-bold text-navy mb-1">Connect with the family</div><div class="text-slate text-sm">If the parent accepts, they share their contact details with you. Your conversation continues outside the platform, but all platform activity remains on record.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 text-center flex flex-col sm:flex-row gap-4 justify-center">
+        <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-8 py-4 rounded-xl transition-all">Register as a Parent</button>
+        <button onclick="showPage('apply-scout')" class="border-2 border-navy text-navy hover:bg-navy hover:text-white font-semibold px-8 py-4 rounded-xl transition-all">Apply for Scout Access</button>
+      </div>
+    </div>
+  </section>
+  <div id="footer-how"></div>
+</div>
+
+<!-- ════════════════════════ PAGE: FOR PARENTS ═══════════════════════════════ -->
+<div id="page-parents" class="page fade-in">
+  <section class="hero-gradient text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl sm:text-5xl font-black mb-4">For Parents & Guardians</h1>
+      <p class="text-blue-100 text-lg">Your child's talent. Your control. Always.</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="grid lg:grid-cols-2 gap-12 items-start mb-16">
+        <div>
+          <h2 class="text-2xl font-black text-navy mb-6">What we promise you</h2>
+          <div class="space-y-4">
+            <div class="flex gap-3 items-start p-4 bg-gray-50 rounded-xl">
+              <span class="text-sage text-lg flex-shrink-0">🔒</span>
+              <div><div class="font-semibold text-navy text-sm mb-1">No public profiles, ever</div><div class="text-slate text-xs">Your child's profile is never visible without a logged-in, verified account. It won't appear in Google.</div></div>
+            </div>
+            <div class="flex gap-3 items-start p-4 bg-gray-50 rounded-xl">
+              <span class="text-sage text-lg flex-shrink-0">📬</span>
+              <div><div class="font-semibold text-navy text-sm mb-1">You decide who contacts you</div><div class="text-slate text-xs">Every scout contact request goes to you first. You approve or decline. Your child is never contacted directly.</div></div>
+            </div>
+            <div class="flex gap-3 items-start p-4 bg-gray-50 rounded-xl">
+              <span class="text-sage text-lg flex-shrink-0">🗑️</span>
+              <div><div class="font-semibold text-navy text-sm mb-1">Delete everything, any time</div><div class="text-slate text-xs">One click removes your child's profile and all their data. We complete deletion within 30 days as required by POPIA.</div></div>
+            </div>
+            <div class="flex gap-3 items-start p-4 bg-gray-50 rounded-xl">
+              <span class="text-sage text-lg flex-shrink-0">🇿🇦</span>
+              <div><div class="font-semibold text-navy text-sm mb-1">POPIA compliant</div><div class="text-slate text-xs">We follow South Africa's Protection of Personal Information Act. Your data is never sold or shared with advertisers.</div></div>
+            </div>
+            <div class="flex gap-3 items-start p-4 bg-amber bg-opacity-10 rounded-xl border border-amber border-opacity-30">
+              <span class="text-amber text-lg flex-shrink-0">💚</span>
+              <div><div class="font-semibold text-navy text-sm mb-1">Completely free for families</div><div class="text-slate text-xs">Registration, profile creation, and all parent features are free. Cost will never be a barrier to your child's opportunity.</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-navy rounded-2xl p-7 text-white">
+          <h3 class="font-bold text-lg mb-5">What you'll need to register</h3>
+          <div class="space-y-3 text-sm text-blue-100">
+            <div class="flex gap-3"><span class="text-amber">✓</span> Your email address and cellphone number</div>
+            <div class="flex gap-3"><span class="text-amber">✓</span> Your child's name, date of birth, school, and province</div>
+            <div class="flex gap-3"><span class="text-amber">✓</span> Their primary sport and position or event</div>
+            <div class="flex gap-3"><span class="text-amber">✓</span> A photo or two (phone photos are perfect)</div>
+            <div class="flex gap-3"><span class="text-amber">✓</span> A short video clip (upload to YouTube or Google Drive)</div>
+            <div class="flex gap-3"><span class="text-amber">✓</span> A list of achievements (school teams, district medals, etc.)</div>
+            <div class="flex gap-3"><span class="text-amber">✓</span> Their coach's name and contact (optional but recommended)</div>
+          </div>
+          <div class="mt-6 pt-5 border-t border-white border-opacity-20 text-xs text-blue-200">That's it. The whole process takes about 10–15 minutes.</div>
+          <button onclick="showPage('apply-parent')" class="mt-5 w-full bg-amber hover:bg-amber-dark text-white font-bold py-3 rounded-xl transition-all text-sm">Start Registration — Free →</button>
+        </div>
+      </div>
+
+      <!-- FAQ for Parents -->
+      <h2 class="text-2xl font-black text-navy mb-6">Parents ask us…</h2>
+      <div class="space-y-3" id="parentFaq">
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+          <button onclick="toggleFaq('pf1')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">Is it safe to upload my child's photos?<span id="pf1-icon" class="text-amber text-lg font-bold">+</span></button>
+          <div id="pf1" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">Yes. Photos are stored securely in a private database and are only visible to our individually verified scouts — never to the public, never indexed by Google. Our admin team approves each photo before it becomes visible to anyone.</div></div>
+        </div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+          <button onclick="toggleFaq('pf2')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">What if I change my mind?<span id="pf2-icon" class="text-amber text-lg font-bold">+</span></button>
+          <div id="pf2" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">You can deactivate your child's profile at any time with a single click — it instantly becomes invisible to all scouts. You can also permanently delete the profile and all associated data. We will confirm deletion within 30 days, as required by South Africa's POPIA law.</div></div>
+        </div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+          <button onclick="toggleFaq('pf3')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">Can a scout contact my child directly?<span id="pf3-icon" class="text-amber text-lg font-bold">+</span></button>
+          <div id="pf3" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">No. This is a hard rule built into the platform. Scouts can only send a contact request to you, the parent or guardian. If you accept, they receive your contact details — not your child's. Your child's personal information is never shared with any scout.</div></div>
+        </div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+          <button onclick="toggleFaq('pf4')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">How long does profile approval take?<span id="pf4-icon" class="text-amber text-lg font-bold">+</span></button>
+          <div id="pf4" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">We aim to review and approve all submitted profiles within 48 hours on business days. You'll receive an email as soon as your child's profile is approved or if we need any additional information.</div></div>
+        </div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+          <button onclick="toggleFaq('pf5')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">How do I know who is viewing my child's profile?<span id="pf5-icon" class="text-amber text-lg font-bold">+</span></button>
+          <div id="pf5" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">Every time a verified scout views your child's profile, you receive a notification showing the scout's organisation name. You can see the full view history in your parent dashboard at any time.</div></div>
+        </div>
+      </div>
+
+      <div class="mt-10 text-center">
+        <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg text-base">Register Your Child — It's Free</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════════ PAGE: FOR SCOUTS ════════════════════════════════ -->
+<div id="page-scouts" class="page fade-in">
+  <section class="hero-gradient text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl sm:text-5xl font-black mb-4">For Scouts, Schools & Coaches</h1>
+      <p class="text-blue-100 text-lg">Find the next generation of South African sporting talent — from every corner of the country.</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="grid lg:grid-cols-2 gap-12 mb-16">
+        <div>
+          <h2 class="text-2xl font-black text-navy mb-6">Who can apply for access</h2>
+          <div class="space-y-3">
+            <div class="flex gap-3 items-center p-4 bg-gray-50 rounded-xl"><span class="text-2xl">🏫</span><div class="text-sm font-medium text-navy">Independent schools and sports academies</div></div>
+            <div class="flex gap-3 items-center p-4 bg-gray-50 rounded-xl"><span class="text-2xl">⚽</span><div class="text-sm font-medium text-navy">Professional sports club talent scouts</div></div>
+            <div class="flex gap-3 items-center p-4 bg-gray-50 rounded-xl"><span class="text-2xl">🎓</span><div class="text-sm font-medium text-navy">University and college sports bursary officers</div></div>
+            <div class="flex gap-3 items-center p-4 bg-gray-50 rounded-xl"><span class="text-2xl">🏆</span><div class="text-sm font-medium text-navy">Provincial and national federation scouts</div></div>
+            <div class="flex gap-3 items-center p-4 bg-gray-50 rounded-xl"><span class="text-2xl">💚</span><div class="text-sm font-medium text-navy">NGOs and development programmes with a sporting focus</div></div>
+          </div>
+        </div>
+        <div>
+          <h2 class="text-2xl font-black text-navy mb-6">What you get after approval</h2>
+          <div class="space-y-4">
+            <div class="flex gap-3 items-start p-4 border-l-4 border-amber bg-amber bg-opacity-5 rounded-r-xl">
+              <div><div class="font-semibold text-navy text-sm mb-1">Searchable athlete database</div><div class="text-slate text-xs">Filter by sport, province, age group, gender, position, and achievement level to find exactly who you're looking for.</div></div>
+            </div>
+            <div class="flex gap-3 items-start p-4 border-l-4 border-amber bg-amber bg-opacity-5 rounded-r-xl">
+              <div><div class="font-semibold text-navy text-sm mb-1">Save shortlists</div><div class="text-slate text-xs">Bookmark profiles to personal shortlists with private notes. Track your recruitment pipeline in one place.</div></div>
+            </div>
+            <div class="flex gap-3 items-start p-4 border-l-4 border-amber bg-amber bg-opacity-5 rounded-r-xl">
+              <div><div class="font-semibold text-navy text-sm mb-1">Safe contact requests</div><div class="text-slate text-xs">Send a message through the platform. It goes to the parent — and only if they accept do you get their contact details.</div></div>
+            </div>
+            <div class="flex gap-3 items-start p-4 border-l-4 border-amber bg-amber bg-opacity-5 rounded-r-xl">
+              <div><div class="font-semibold text-navy text-sm mb-1">Full POPIA & child protection compliance</div><div class="text-slate text-xs">Use Scout Republic with confidence that every interaction is documented, appropriate, and legally compliant.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Warning box -->
+      <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-6 mb-12">
+        <div class="flex gap-4 items-start">
+          <span class="text-red-500 text-2xl flex-shrink-0">⚠️</span>
+          <div>
+            <h3 class="font-bold text-red-700 mb-2">Important: Access is not automatic</h3>
+            <p class="text-red-600 text-sm leading-relaxed">Every applicant is reviewed by a human member of our team. We verify your identity and your organisational affiliation before granting any access. Any misuse of the platform — including attempting to contact children directly — results in immediate and permanent account revocation and may be reported to the relevant authorities.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <h3 class="text-xl font-black text-navy mb-4">Ready to apply?</h3>
+        <p class="text-slate mb-6">The application takes about 10 minutes. We'll review it within 5 business days.</p>
+        <button onclick="showPage('apply-scout')" class="bg-navy hover:bg-navy-dark text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg">Apply for Scout Access →</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════════ PAGE: SAFETY ════════════════════════════════════ -->
+<div id="page-safety" class="page fade-in">
+  <section class="bg-navy text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <div class="text-6xl mb-4">🛡️</div>
+      <h1 class="text-4xl sm:text-5xl font-black mb-4">Safety & Privacy</h1>
+      <p class="text-blue-100 text-xl font-medium">Child safety is not a feature.<br/>It is the foundation of everything we do.</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl font-black text-navy mb-8 text-center">Our 8 Safety Promises</h2>
+      <div class="grid sm:grid-cols-2 gap-4 mb-16">
+        <div class="p-5 bg-mist rounded-xl border border-mist-dark"><div class="text-2xl mb-3">🔒</div><h3 class="font-bold text-navy text-sm mb-2">No public profiles</h3><p class="text-slate text-xs">No athlete profile is ever visible without a logged-in, verified account. Your child cannot be found by searching Google.</p></div>
+        <div class="p-5 bg-mist rounded-xl border border-mist-dark"><div class="text-2xl mb-3">✅</div><h3 class="font-bold text-navy text-sm mb-2">Consent before everything</h3><p class="text-slate text-xs">No child's data is stored without the explicit, documented consent of their parent or guardian. Consent is versioned and logged.</p></div>
+        <div class="p-5 bg-mist rounded-xl border border-mist-dark"><div class="text-2xl mb-3">🧑‍💼</div><h3 class="font-bold text-navy text-sm mb-2">Every scout is vetted by a human</h3><p class="text-slate text-xs">We individually review and verify every scout, coach, and school representative before granting access.</p></div>
+        <div class="p-5 bg-mist rounded-xl border border-mist-dark"><div class="text-2xl mb-3">📋</div><h3 class="font-bold text-navy text-sm mb-2">Full audit trail</h3><p class="text-slate text-xs">Every profile view is logged. We know who saw what, when, and from which account. Parents can see this log.</p></div>
+        <div class="p-5 bg-mist rounded-xl border border-mist-dark"><div class="text-2xl mb-3">📵</div><h3 class="font-bold text-navy text-sm mb-2">No direct child contact</h3><p class="text-slate text-xs">Scouts can only contact parents or guardians. A child's contact details are never shared with any scout.</p></div>
+        <div class="p-5 bg-mist rounded-xl border border-mist-dark"><div class="text-2xl mb-3">🇿🇦</div><h3 class="font-bold text-navy text-sm mb-2">POPIA compliant</h3><p class="text-slate text-xs">We follow South Africa's Protection of Personal Information Act in all data handling. Your data is never sold or shared.</p></div>
+        <div class="p-5 bg-mist rounded-xl border border-mist-dark"><div class="text-2xl mb-3">🗑️</div><h3 class="font-bold text-navy text-sm mb-2">Right to erasure</h3><p class="text-slate text-xs">Parents can request full deletion of their child's data at any time. We complete deletion within 30 days.</p></div>
+        <div class="p-5 bg-mist rounded-xl border border-mist-dark"><div class="text-2xl mb-3">🚨</div><h3 class="font-bold text-navy text-sm mb-2">Abuse reporting</h3><p class="text-slate text-xs">Any user can report a concern at any time. Reports are reviewed by a human within 24 hours. Action is taken immediately.</p></div>
+      </div>
+
+      <!-- POPIA section -->
+      <div class="bg-navy rounded-2xl p-8 text-white mb-12">
+        <h2 class="text-xl font-black mb-5">How We Handle Your Data (POPIA)</h2>
+        <div class="grid sm:grid-cols-2 gap-4 text-sm text-blue-100">
+          <div class="flex gap-3"><span class="text-amber flex-shrink-0">▸</span><div><span class="font-semibold text-white">What we collect:</span> Your name, email, phone. Your child's name, DOB, sport, school, photos, videos, achievements.</div></div>
+          <div class="flex gap-3"><span class="text-amber flex-shrink-0">▸</span><div><span class="font-semibold text-white">Why we collect it:</span> So vetted scouts can discover your child's talent and contact you about opportunities.</div></div>
+          <div class="flex gap-3"><span class="text-amber flex-shrink-0">▸</span><div><span class="font-semibold text-white">Who we share it with:</span> Only with individually verified scouts and schools. Never with the public, never sold, never advertised.</div></div>
+          <div class="flex gap-3"><span class="text-amber flex-shrink-0">▸</span><div><span class="font-semibold text-white">How long we keep it:</span> While your profile is active, plus 12 months after you close your account. Delete any time.</div></div>
+          <div class="flex gap-3"><span class="text-amber flex-shrink-0">▸</span><div><span class="font-semibold text-white">Your rights:</span> Access, correct, delete, or stop processing your data. Email privacy@scoutrepublic.co.za.</div></div>
+          <div class="flex gap-3"><span class="text-amber flex-shrink-0">▸</span><div><span class="font-semibold text-white">To complain:</span> Contact the Information Regulator of South Africa at inforeg.org.za.</div></div>
+        </div>
+      </div>
+
+      <!-- Report box -->
+      <div class="border-2 border-red-300 bg-red-50 rounded-2xl p-6 text-center">
+        <div class="text-4xl mb-3">🚨</div>
+        <h3 class="font-black text-navy text-lg mb-2">Report a Concern</h3>
+        <p class="text-slate text-sm mb-4">If you see something that doesn't feel right — inappropriate content, suspicious behaviour, or anything else — please report it immediately. All reports are reviewed by a human within 24 hours.</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <button onclick="showPage('contact')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-xl transition-all text-sm">Report a Concern</button>
+          <a href="mailto:safety@scoutrepublic.co.za" class="border-2 border-red-300 text-red-600 hover:bg-red-50 font-semibold px-6 py-3 rounded-xl transition-all text-sm inline-flex items-center justify-center">safety@scoutrepublic.co.za</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════════ PAGE: SUCCESS STORIES ═══════════════════════════ -->
+<div id="page-stories" class="page fade-in">
+  <section class="hero-gradient text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl sm:text-5xl font-black mb-4">Success Stories</h1>
+      <p class="text-blue-100 text-lg">Every story here represents a child who was seen. A family whose trust was honoured.</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10 p-4 bg-mist rounded-xl text-navy-light text-sm">
+        <span class="font-semibold">Note:</span> Stories are anonymised or published with explicit written parent consent. No child's full name or school is used without consent.
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 card-hover">
+          <div class="text-3xl mb-4">⚽</div>
+          <div class="inline-block bg-sage bg-opacity-15 text-sage text-xs font-bold px-3 py-1 rounded-full mb-3">Football · Limpopo</div>
+          <p class="text-ink leading-relaxed text-sm mb-4">"We live in a small village outside Tzaneen. My son has been playing football since he was five. His coach always said he was special, but we never knew how to get him noticed by the right people. A month after his profile went live on Scout Republic, we received a contact request from a football academy in Pretoria. He now trains with them every school holiday."</p>
+          <div class="text-slate text-xs font-medium">— Mother of a 14-year-old midfielder, Limpopo</div>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 card-hover">
+          <div class="text-3xl mb-4">🏃</div>
+          <div class="inline-block bg-sage bg-opacity-15 text-sage text-xs font-bold px-3 py-1 rounded-full mb-3">Athletics · Eastern Cape</div>
+          <p class="text-ink leading-relaxed text-sm mb-4">"Our daughter runs like the wind — everyone in our community knows it. But our school doesn't have a proper athletics programme. Her profile on Scout Republic was seen by a university athletics bursary coordinator who reached out to us. She's now on a partial bursary and running at provincial level."</p>
+          <div class="text-slate text-xs font-medium">— Father of a 17-year-old sprinter, Eastern Cape</div>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 card-hover">
+          <div class="text-3xl mb-4">🏉</div>
+          <div class="inline-block bg-sage bg-opacity-15 text-sage text-xs font-bold px-3 py-1 rounded-full mb-3">Rugby · North West</div>
+          <p class="text-ink leading-relaxed text-sm mb-4">"I was nervous about putting my son's information online. But the platform made me feel safe — I could see exactly who viewed his profile, and I controlled everything. A scout from a well-known rugby school contacted me professionally and respectfully. That's all I wanted."</p>
+          <div class="text-slate text-xs font-medium">— Guardian of a 15-year-old lock, North West</div>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 card-hover">
+          <div class="text-3xl mb-4">🏐</div>
+          <div class="inline-block bg-sage bg-opacity-15 text-sage text-xs font-bold px-3 py-1 rounded-full mb-3">Netball · KwaZulu-Natal</div>
+          <p class="text-ink leading-relaxed text-sm mb-4">"As a school sports coordinator, I was the one who told parents about Scout Republic. Three of our girls now have approved profiles. One of them was shortlisted by a provincial netball development programme within six weeks. We finally have a platform that treats our community with dignity."</p>
+          <div class="text-slate text-xs font-medium">— Sports Coordinator, rural school, KwaZulu-Natal</div>
+        </div>
+      </div>
+      <div class="bg-amber bg-opacity-10 border border-amber border-opacity-30 rounded-2xl p-8 text-center">
+        <h3 class="font-black text-navy text-xl mb-3">Share your story with us</h3>
+        <p class="text-slate text-sm mb-5">Has Scout Republic made a difference for your family? We'd love to hear about it. With your permission, your story can inspire others to take the same step.</p>
+        <button onclick="showPage('contact')" class="bg-amber hover:bg-amber-dark text-white font-bold px-7 py-3 rounded-xl transition-all text-sm">Share Your Story</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════════ PAGE: APPLY AS PARENT ═══════════════════════════ -->
+<div id="page-apply-parent" class="page fade-in">
+  <section class="hero-gradient text-white py-14">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl font-black mb-3">Register Your Child</h1>
+      <p class="text-blue-100">Free, safe, and takes less than 10 minutes. No credit card required.</p>
+    </div>
+  </section>
+
+  <section class="py-12 bg-gray-50">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <h2 class="text-xl font-black text-navy mb-6">Start your free registration</h2>
+        <form onsubmit="submitParentForm(event)" novalidate>
+          <div class="space-y-5">
+            <div>
+              <label class="block text-sm font-semibold text-navy mb-1.5">Your full name <span class="text-red-500">*</span></label>
+              <input type="text" id="p-name" required placeholder="e.g. Nomsa Dlamini" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-navy mb-1.5">Email address <span class="text-red-500">*</span></label>
+                <input type="email" id="p-email" required placeholder="nomsa@email.com" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-navy mb-1.5">Cellphone number <span class="text-red-500">*</span></label>
+                <input type="tel" id="p-phone" required placeholder="+27 71 234 5678" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-navy mb-1.5">Province <span class="text-red-500">*</span></label>
+              <select id="p-province" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors bg-white">
+                <option value="">Select your province…</option>
+                <option>Limpopo</option><option>Eastern Cape</option><option>KwaZulu-Natal</option><option>North West</option><option>Mpumalanga</option><option>Free State</option><option>Northern Cape</option><option>Western Cape</option><option>Gauteng</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-navy mb-1.5">Your relationship to the child <span class="text-red-500">*</span></label>
+              <select id="p-relationship" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors bg-white">
+                <option value="">Select…</option>
+                <option>Parent</option><option>Legal guardian</option><option>Caregiver with parental consent</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-navy mb-1.5">How did you hear about Scout Republic?</label>
+              <select id="p-source" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors bg-white">
+                <option value="">Select…</option>
+                <option>WhatsApp group</option><option>Facebook</option><option>School notice</option><option>Coach or teacher</option><option>Word of mouth</option><option>Other</option>
+              </select>
+            </div>
+            <div class="bg-mist rounded-xl p-4 space-y-3">
+              <label class="flex gap-3 items-start cursor-pointer">
+                <input type="checkbox" id="p-consent1" required class="mt-0.5 w-4 h-4 accent-navy flex-shrink-0" />
+                <span class="text-xs text-ink">I confirm that I am the parent or legal guardian of the child I will be registering on Scout Republic. <span class="text-red-500">*</span></span>
+              </label>
+              <label class="flex gap-3 items-start cursor-pointer">
+                <input type="checkbox" id="p-consent2" required class="mt-0.5 w-4 h-4 accent-navy flex-shrink-0" />
+                <span class="text-xs text-ink">I have read and I understand the <a href="#" class="text-navy underline font-semibold">Privacy Notice</a> and I consent to Scout Republic processing my personal information and my child's personal information for the purpose of talent discovery as described. <span class="text-red-500">*</span></span>
+              </label>
+              <label class="flex gap-3 items-start cursor-pointer">
+                <input type="checkbox" id="p-consent3" required class="mt-0.5 w-4 h-4 accent-navy flex-shrink-0" />
+                <span class="text-xs text-ink">I agree to the <a href="#" class="text-navy underline font-semibold">Terms of Use</a>. <span class="text-red-500">*</span></span>
+              </label>
+            </div>
+            <div id="p-error" class="hidden bg-red-50 text-red-600 text-sm px-4 py-3 rounded-xl border border-red-200"></div>
+            <div id="p-success" class="hidden bg-sage bg-opacity-15 text-sage-dark text-sm px-4 py-4 rounded-xl border border-sage border-opacity-30">
+              <div class="font-bold mb-1">✅ Thank you! Your registration has been received.</div>
+              <div>We'll send a verification email to the address you provided. Please check your inbox (and spam folder) and click the link to continue setting up your account.</div>
+            </div>
+            <button type="submit" id="p-submit" class="w-full bg-amber hover:bg-amber-dark text-white font-bold py-4 rounded-xl transition-all shadow-md text-base">
+              Start My Free Registration →
+            </button>
+            <p class="text-center text-xs text-slate">No credit card required. Always free for families.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════════ PAGE: APPLY AS SCOUT ════════════════════════════ -->
+<div id="page-apply-scout" class="page fade-in">
+  <section class="bg-ink text-white py-14">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl font-black mb-3">Apply for Scout Access</h1>
+      <p class="text-gray-300">Applications are reviewed by our team within 5 business days.</p>
+    </div>
+  </section>
+
+  <section class="py-12 bg-gray-50">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6">
+      <div class="bg-amber bg-opacity-10 border border-amber border-opacity-30 rounded-xl p-4 mb-6 text-sm text-ink">
+        <span class="font-bold text-amber-dark">⚠ Please note:</span> Access is not automatic. We verify every applicant's identity and organisational affiliation. Approval typically takes 3–5 business days.
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <form onsubmit="submitScoutForm(event)" novalidate>
+          <div class="space-y-5">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-navy mb-1.5">Your full name <span class="text-red-500">*</span></label>
+                <input type="text" id="s-name" required placeholder="Full name" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-navy mb-1.5">Your role / job title <span class="text-red-500">*</span></label>
+                <input type="text" id="s-role" required placeholder="e.g. Head Scout, Sports Director" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+              </div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-navy mb-1.5">Email address <span class="text-red-500">*</span></label>
+                <input type="email" id="s-email" required placeholder="you@organisation.co.za" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-navy mb-1.5">Cellphone number <span class="text-red-500">*</span></label>
+                <input type="tel" id="s-phone" required placeholder="+27 71 234 5678" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-navy mb-1.5">Organisation name <span class="text-red-500">*</span></label>
+              <input type="text" id="s-org" required placeholder="e.g. Jeppe High School, Mamelodi Sundowns Academy" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-navy mb-1.5">Organisation type <span class="text-red-500">*</span></label>
+              <select id="s-orgtype" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors bg-white">
+                <option value="">Select…</option>
+                <option>Independent school</option><option>Sports academy</option><option>Professional club</option><option>University / college</option><option>Sports federation</option><option>NGO / development programme</option><option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-navy mb-1.5">Sports federation affiliation (if any)</label>
+              <input type="text" id="s-federation" placeholder="e.g. SAFA, SA Rugby, Athletics SA" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-navy mb-1.5">Why are you requesting access? <span class="text-red-500">*</span></label>
+              <textarea id="s-reason" required rows="4" placeholder="Please describe your role, the talent you're looking for, and how you intend to use the platform. Minimum 100 characters." class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors resize-none"></textarea>
+              <div class="text-xs text-slate mt-1" id="s-reason-count">0 / 100 characters minimum</div>
+            </div>
+            <div class="bg-mist rounded-xl p-4">
+              <label class="flex gap-3 items-start cursor-pointer">
+                <input type="checkbox" id="s-consent" required class="mt-0.5 w-4 h-4 accent-navy flex-shrink-0" />
+                <span class="text-xs text-ink">I agree to the Scout Republic Scout Code of Conduct and Terms of Use. I understand that any misuse of the platform or direct contact with children will result in immediate permanent revocation of access. <span class="text-red-500">*</span></span>
+              </label>
+            </div>
+            <div id="s-error" class="hidden bg-red-50 text-red-600 text-sm px-4 py-3 rounded-xl border border-red-200"></div>
+            <div id="s-success" class="hidden bg-sage bg-opacity-15 text-sage-dark text-sm px-4 py-4 rounded-xl border border-sage border-opacity-30">
+              <div class="font-bold mb-1">✅ Application received. Thank you.</div>
+              <div>We'll review your application within 5 business days and email you with our decision. If we need anything further, we'll reach out via the email address you provided.</div>
+            </div>
+            <button type="submit" id="s-submit" class="w-full bg-navy hover:bg-navy-dark text-white font-bold py-4 rounded-xl transition-all shadow-md text-base">
+              Submit My Application →
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════════ PAGE: CONTACT ═══════════════════════════════════ -->
+<div id="page-contact" class="page fade-in">
+  <section class="hero-gradient text-white py-14">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl font-black mb-3">Contact Us</h1>
+      <p class="text-blue-100">We're here to help. We aim to respond within 2 business days.</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 text-center card-hover">
+          <div class="text-3xl mb-3">✉️</div>
+          <h3 class="font-bold text-navy mb-2">General Enquiries</h3>
+          <a href="mailto:hello@scoutrepublic.co.za" class="text-sm text-amber font-semibold hover:underline">hello@scoutrepublic.co.za</a>
+        </div>
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 text-center card-hover">
+          <div class="text-3xl mb-3">🛡️</div>
+          <h3 class="font-bold text-navy mb-2">Safety & Reports</h3>
+          <a href="mailto:safety@scoutrepublic.co.za" class="text-sm text-red-500 font-semibold hover:underline">safety@scoutrepublic.co.za</a>
+          <div class="text-xs text-slate mt-1">Reviewed within 24 hours</div>
+        </div>
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 text-center card-hover">
+          <div class="text-3xl mb-3">🔐</div>
+          <h3 class="font-bold text-navy mb-2">Privacy & Data</h3>
+          <a href="mailto:privacy@scoutrepublic.co.za" class="text-sm text-navy font-semibold hover:underline">privacy@scoutrepublic.co.za</a>
+          <div class="text-xs text-slate mt-1">POPIA requests &amp; data deletion</div>
+        </div>
+      </div>
+
+      <div class="max-w-xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+          <h2 class="text-xl font-black text-navy mb-6">Send us a message</h2>
+          <form onsubmit="submitContactForm(event)" novalidate class="space-y-4">
+            <div>
+              <label class="block text-sm font-semibold text-navy mb-1.5">Your name <span class="text-red-500">*</span></label>
+              <input type="text" id="c-name" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-navy mb-1.5">Email address <span class="text-red-500">*</span></label>
+              <input type="email" id="c-email" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-navy mb-1.5">Subject</label>
+              <select id="c-subject" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors bg-white">
+                <option>General enquiry</option><option>Parent registration help</option><option>Scout access enquiry</option><option>Safety concern</option><option>Privacy / data request</option><option>Partnership / media</option><option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-navy mb-1.5">Message <span class="text-red-500">*</span></label>
+              <textarea id="c-message" required rows="4" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors resize-none"></textarea>
+            </div>
+            <div id="c-success" class="hidden bg-sage bg-opacity-15 text-sage-dark text-sm px-4 py-3 rounded-xl border border-sage border-opacity-30 font-semibold">✅ Message sent! We'll be in touch within 2 business days.</div>
+            <button type="submit" class="w-full bg-navy hover:bg-navy-dark text-white font-bold py-3.5 rounded-xl transition-all">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════════ PAGE: FAQ ═══════════════════════════════════════ -->
+<div id="page-faq" class="page fade-in">
+  <section class="hero-gradient text-white py-14">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl font-black mb-3">Frequently Asked Questions</h1>
+      <p class="text-blue-100">Everything you need to know about Scout Republic.</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <h2 class="text-lg font-black text-navy mb-4">For Parents</h2>
+      <div class="space-y-2 mb-10" id="faqParent">
+        <div class="border border-gray-200 rounded-xl overflow-hidden"><button onclick="toggleFaq('f1')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">Is Scout Republic free for parents?<span id="f1-icon" class="text-amber text-xl font-bold flex-shrink-0 ml-4">+</span></button><div id="f1" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">Yes, completely free. We believe that cost should never be a barrier for a child's opportunity. Registration, profile creation, and all parent features are free forever.</div></div></div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden"><button onclick="toggleFaq('f2')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">What age group is the platform for?<span id="f2-icon" class="text-amber text-xl font-bold flex-shrink-0 ml-4">+</span></button><div id="f2" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">Currently for athletes aged 8 to 18. Profiles are categorised into age groups (U10, U13, U16, U19) so scouts can filter appropriately.</div></div></div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden"><button onclick="toggleFaq('f3')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">Can I register children from any province?<span id="f3-icon" class="text-amber text-xl font-bold flex-shrink-0 ml-4">+</span></button><div id="f3" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">Yes. Scout Republic covers all nine provinces of South Africa. We actively encourage registrations from rural provinces including Limpopo, Eastern Cape, KwaZulu-Natal, and North West.</div></div></div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden"><button onclick="toggleFaq('f4')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">Can I register more than one child?<span id="f4-icon" class="text-amber text-xl font-bold flex-shrink-0 ml-4">+</span></button><div id="f4" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">Yes. You can create up to three child profiles under one parent account. Each profile is managed and approved independently.</div></div></div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden"><button onclick="toggleFaq('f5')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">My child doesn't have a YouTube video. Can I still register?<span id="f5-icon" class="text-amber text-xl font-bold flex-shrink-0 ml-4">+</span></button><div id="f5" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">Yes. A video link is optional. A strong profile with good photos, a clear bio, and documented achievements is still very valuable to scouts. If you can, even a short phone video uploaded to YouTube goes a long way.</div></div></div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden"><button onclick="toggleFaq('f6')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">What sports are covered?<span id="f6-icon" class="text-amber text-xl font-bold flex-shrink-0 ml-4">+</span></button><div id="f6" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">Phase 1 covers Football, Rugby, Athletics (Track & Field), Cricket, Netball, Swimming, and Tennis. Additional sports will be added in Phase 2 based on demand.</div></div></div>
+      </div>
+
+      <h2 class="text-lg font-black text-navy mb-4">For Scouts & Schools</h2>
+      <div class="space-y-2 mb-10">
+        <div class="border border-gray-200 rounded-xl overflow-hidden"><button onclick="toggleFaq('f7')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">How long does the approval process take?<span id="f7-icon" class="text-amber text-xl font-bold flex-shrink-0 ml-4">+</span></button><div id="f7" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">We aim to review all scout applications within 5 business days. During busier periods it may take slightly longer, and we may contact you to request additional documentation.</div></div></div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden"><button onclick="toggleFaq('f8')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">Can I contact an athlete directly?<span id="f8-icon" class="text-amber text-xl font-bold flex-shrink-0 ml-4">+</span></button><div id="f8" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">No. This is a hard rule. You can send a contact request through the platform, which is delivered to the parent or guardian. Only if the parent accepts do you receive their contact details. Children's personal details are never shared.</div></div></div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden"><button onclick="toggleFaq('f9')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">Is there a cost for scouts?<span id="f9-icon" class="text-amber text-xl font-bold flex-shrink-0 ml-4">+</span></button><div id="f9" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">During Phase 1 (the first 4–6 months), access is free for all verified scouts and schools. Paid subscription tiers will be introduced in Phase 2 for those wanting unlimited searches, shortlisting, and contact requests.</div></div></div>
+      </div>
+
+      <h2 class="text-lg font-black text-navy mb-4">Safety & Privacy</h2>
+      <div class="space-y-2 mb-10">
+        <div class="border border-gray-200 rounded-xl overflow-hidden"><button onclick="toggleFaq('f10')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">Is Scout Republic POPIA compliant?<span id="f10-icon" class="text-amber text-xl font-bold flex-shrink-0 ml-4">+</span></button><div id="f10" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">Yes. Scout Republic is designed from the ground up with POPIA (Protection of Personal Information Act) compliance in mind. We have a named Information Officer, we collect only the data we need, we store it securely, and we honour all data subject rights including access, correction, and deletion.</div></div></div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden"><button onclick="toggleFaq('f11')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">Where is my data stored?<span id="f11-icon" class="text-amber text-xl font-bold flex-shrink-0 ml-4">+</span></button><div id="f11" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">All data is stored in Supabase (PostgreSQL) in the Frankfurt, Germany region — which is considered an adequate data protection jurisdiction for POPIA purposes. Sensitive fields like ID numbers are encrypted at rest.</div></div></div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden"><button onclick="toggleFaq('f12')" class="w-full text-left flex justify-between items-center p-5 hover:bg-gray-50 font-semibold text-navy text-sm">How do I request deletion of my data?<span id="f12-icon" class="text-amber text-xl font-bold flex-shrink-0 ml-4">+</span></button><div id="f12" class="accordion-body"><div class="px-5 pb-5 text-slate text-sm">You can delete your child's profile at any time from your parent dashboard. For full account deletion, click "Delete My Account" in Account Settings or email privacy@scoutrepublic.co.za. We will confirm deletion within 30 days as required by POPIA.</div></div></div>
+      </div>
+
+      <div class="bg-navy text-white rounded-2xl p-7 text-center">
+        <h3 class="font-black text-lg mb-3">Still have questions?</h3>
+        <p class="text-blue-100 text-sm mb-5">Our team is here to help. We respond within 2 business days.</p>
+        <button onclick="showPage('contact')" class="bg-amber hover:bg-amber-dark text-white font-bold px-7 py-3 rounded-xl transition-all text-sm">Contact Us</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════ JAVASCRIPT ════════════════════════════════════ -->
+<script>
+  const pages = ['home','how','parents','scouts','safety','stories','apply-parent','apply-scout','contact','faq'];
+  let mobileOpen = false;
+
+  function showPage(id) {
+    pages.forEach(p => {
+      const el = document.getElementById('page-' + p);
+      if (el) el.classList.remove('active');
+    });
+    const target = document.getElementById('page-' + id);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // Close mobile menu
+    if (mobileOpen) toggleMobile();
+  }
+
+  function toggleMobile() {
+    mobileOpen = !mobileOpen;
+    const menu = document.getElementById('mobileMenu');
+    const iconMenu = document.getElementById('iconMenu');
+    const iconClose = document.getElementById('iconClose');
+    menu.classList.toggle('open', mobileOpen);
+    iconMenu.classList.toggle('hidden', mobileOpen);
+    iconClose.classList.toggle('hidden', !mobileOpen);
+  }
+
+  function toggleFaq(id) {
+    const el = document.getElementById(id);
+    const icon = document.getElementById(id + '-icon');
+    const isOpen = el.classList.toggle('open');
+    if (icon) icon.textContent = isOpen ? '−' : '+';
+  }
+
+  // Track reason textarea length
+  const reasonTextarea = document.getElementById('s-reason');
+  if (reasonTextarea) {
+    reasonTextarea.addEventListener('input', () => {
+      const len = reasonTextarea.value.length;
+      const counter = document.getElementById('s-reason-count');
+      counter.textContent = `${len} / 100 characters minimum`;
+      counter.className = 'text-xs mt-1 ' + (len < 100 ? 'text-red-400' : 'text-sage');
+    });
+  }
+
+  // Parent form submission
+  function submitParentForm(e) {
+    e.preventDefault();
+    const name = document.getElementById('p-name').value.trim();
+    const email = document.getElementById('p-email').value.trim();
+    const phone = document.getElementById('p-phone').value.trim();
+    const province = document.getElementById('p-province').value;
+    const rel = document.getElementById('p-relationship').value;
+    const c1 = document.getElementById('p-consent1').checked;
+    const c2 = document.getElementById('p-consent2').checked;
+    const c3 = document.getElementById('p-consent3').checked;
+    const errEl = document.getElementById('p-error');
+    const sucEl = document.getElementById('p-success');
+
+    errEl.classList.add('hidden');
+    sucEl.classList.add('hidden');
+
+    if (!name || !email || !phone || !province || !rel) {
+      errEl.textContent = 'Please fill in all required fields.';
+      errEl.classList.remove('hidden');
+      return;
+    }
+    if (!c1 || !c2 || !c3) {
+      errEl.textContent = 'Please tick all three consent checkboxes to continue.';
+      errEl.classList.remove('hidden');
+      return;
+    }
+    // Simulate submission
+    const btn = document.getElementById('p-submit');
+    btn.textContent = 'Submitting…';
+    btn.disabled = true;
+    btn.classList.add('opacity-75');
+    setTimeout(() => {
+      sucEl.classList.remove('hidden');
+      btn.classList.add('hidden');
+    }, 1200);
+  }
+
+  // Scout form submission
+  function submitScoutForm(e) {
+    e.preventDefault();
+    const name = document.getElementById('s-name').value.trim();
+    const email = document.getElementById('s-email').value.trim();
+    const org = document.getElementById('s-org').value.trim();
+    const reason = document.getElementById('s-reason').value.trim();
+    const consent = document.getElementById('s-consent').checked;
+    const errEl = document.getElementById('s-error');
+    const sucEl = document.getElementById('s-success');
+
+    errEl.classList.add('hidden');
+    sucEl.classList.add('hidden');
+
+    if (!name || !email || !org || !reason) {
+      errEl.textContent = 'Please fill in all required fields.';
+      errEl.classList.remove('hidden');
+      return;
+    }
+    if (reason.length < 100) {
+      errEl.textContent = 'Please provide at least 100 characters in your reason for access field.';
+      errEl.classList.remove('hidden');
+      return;
+    }
+    if (!consent) {
+      errEl.textContent = 'Please agree to the Scout Code of Conduct to continue.';
+      errEl.classList.remove('hidden');
+      return;
+    }
+    const btn = document.getElementById('s-submit');
+    btn.textContent = 'Submitting…';
+    btn.disabled = true;
+    btn.classList.add('opacity-75');
+    setTimeout(() => {
+      sucEl.classList.remove('hidden');
+      btn.classList.add('hidden');
+    }, 1200);
+  }
+
+  // Contact form
+  function submitContactForm(e) {
+    e.preventDefault();
+    const name = document.getElementById('c-name').value.trim();
+    const email = document.getElementById('c-email').value.trim();
+    const msg = document.getElementById('c-message').value.trim();
+    if (!name || !email || !msg) return;
+    const sucEl = document.getElementById('c-success');
+    sucEl.classList.remove('hidden');
+    e.target.querySelectorAll('input, textarea, button[type=submit]').forEach(el => el.disabled = true);
+  }
+</script>
+</body>
+</html>
