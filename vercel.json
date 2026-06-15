@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/scoutrepublic_website.html" },
+    { "source": "/(.*)", "destination": "/scoutrepublic_website.html" }
+  ]
+}
