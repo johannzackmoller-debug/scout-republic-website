@@ -781,11 +781,11 @@
               </label>
               <label class="flex gap-3 items-start cursor-pointer">
                 <input type="checkbox" id="p-consent2" required class="mt-0.5 w-4 h-4 accent-navy flex-shrink-0" />
-                <span class="text-xs text-ink">I have read and I understand the <a href="#" onclick="showPage('privacy'); return false;" class="text-navy underline font-semibold">Privacy Notice</a> and I consent to Scout Republic processing my personal information and my child's personal information for the purpose of talent discovery as described. <span class="text-red-500">*</span></span>
+                <span class="text-xs text-ink">I have read and I understand the <a href="javascript:void(0)" onclick="event.stopPropagation(); showPage('privacy');" class="text-navy underline font-semibold">Privacy Notice</a> and I consent to Scout Republic processing my personal information and my child's personal information for the purpose of talent discovery as described. <span class="text-red-500">*</span></span>
               </label>
               <label class="flex gap-3 items-start cursor-pointer">
                 <input type="checkbox" id="p-consent3" required class="mt-0.5 w-4 h-4 accent-navy flex-shrink-0" />
-                <span class="text-xs text-ink">I agree to the <a href="#" onclick="showPage('terms'); return false;" class="text-navy underline font-semibold">Terms of Use</a>. <span class="text-red-500">*</span></span>
+                <span class="text-xs text-ink">I agree to the <a href="javascript:void(0)" onclick="event.stopPropagation(); showPage('terms');" class="text-navy underline font-semibold">Terms of Use</a>. <span class="text-red-500">*</span></span>
               </label>
             </div>
             <div id="p-error" class="hidden bg-red-50 text-red-600 text-sm px-4 py-3 rounded-xl border border-red-200"></div>
