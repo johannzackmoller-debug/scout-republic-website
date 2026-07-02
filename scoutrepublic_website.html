@@ -78,7 +78,7 @@
       <!-- Desktop CTAs -->
       <div class="hidden lg:flex items-center gap-3">
         <button onclick="showPage('apply-scout')" class="border-2 border-navy text-navy hover:bg-navy hover:text-white font-semibold px-4 py-2 rounded-lg text-sm transition-all">Scout / School Access</button>
-        <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-5 py-2 rounded-lg text-sm transition-all shadow-sm">Register Your Child</button>
+        <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-5 py-2 rounded-lg text-sm transition-all shadow-sm">Register</button>
       </div>
 
       <!-- Hamburger -->
@@ -99,7 +99,7 @@
         <button onclick="showPage('faq')" class="block w-full text-left px-4 py-3 text-sm font-medium text-ink hover:bg-mist rounded-lg">FAQ</button>
         <div class="pt-2 pb-1 px-4 space-y-2">
           <button onclick="showPage('apply-scout')" class="w-full border-2 border-navy text-navy font-semibold py-2.5 rounded-lg text-sm">Scout / School Access</button>
-          <button onclick="showPage('apply-parent')" class="w-full bg-amber text-white font-bold py-2.5 rounded-lg text-sm">Register Your Child</button>
+          <button onclick="showPage('apply-parent')" class="w-full bg-amber text-white font-bold py-2.5 rounded-lg text-sm">Register</button>
         </div>
       </div>
     </div>
@@ -138,7 +138,7 @@
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
             <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-8 py-4 rounded-xl text-base transition-all shadow-lg hover:shadow-xl">
-              Register Your Child — Free
+              Register — Free
             </button>
             <button onclick="showPage('how')" class="bg-white bg-opacity-15 hover:bg-opacity-25 border border-white border-opacity-30 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all">
               See How It Works →
@@ -319,7 +319,7 @@
       <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">Is your child a future Springbok/Protea?<br/>A future Bafana Bafana star?</h2>
       <p class="text-blue-100 text-lg mb-8">They deserve to be seen. Registration is free, safe, and takes less than 10 minutes.</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg">Register Your Child — Free</button>
+        <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg">Register — Free</button>
         <button onclick="showPage('apply-scout')" class="border-2 border-white text-white hover:bg-white hover:text-navy font-semibold px-8 py-4 rounded-xl transition-all">Apply for Scout Access</button>
       </div>
     </div>
@@ -442,7 +442,7 @@
       </div>
 
       <div class="mt-12 text-center flex flex-col sm:flex-row gap-4 justify-center">
-        <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-8 py-4 rounded-xl transition-all">Register as a Parent</button>
+        <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-8 py-4 rounded-xl transition-all">Register</button>
         <button onclick="showPage('apply-scout')" class="border-2 border-navy text-navy hover:bg-navy hover:text-white font-semibold px-8 py-4 rounded-xl transition-all">Apply for Scout Access</button>
       </div>
     </div>
@@ -529,7 +529,7 @@
       </div>
 
       <div class="mt-10 text-center">
-        <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg text-base">Register Your Child — It's Free</button>
+        <button onclick="showPage('apply-parent')" class="bg-amber hover:bg-amber-dark text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg text-base">Register — It's Free</button>
       </div>
     </div>
   </section>
@@ -700,7 +700,7 @@
 <div id="page-apply-parent" class="page fade-in">
   <section class="hero-gradient text-white py-14">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-      <h1 class="text-4xl font-black mb-3">Register Your Child</h1>
+      <h1 class="text-4xl font-black mb-3">Register</h1>
       <p class="text-blue-100">Free, safe, and takes less than 10 minutes. No credit card required.</p>
     </div>
   </section>
@@ -746,6 +746,34 @@
                 <option>WhatsApp group</option><option>Facebook</option><option>School notice</option><option>Coach or teacher</option><option>Word of mouth</option><option>Other</option>
               </select>
             </div>
+            <!-- ── Child Details ── -->
+            <div class="border-t-2 border-gray-100 pt-5 mt-2">
+              <h3 class="text-base font-black text-navy mb-4">About Your Child</h3>
+              <div class="space-y-4">
+                <div class="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-semibold text-navy mb-1.5">Child's first name <span class="text-red-500">*</span></label>
+                    <input type="text" id="p-child-name" required placeholder="e.g. Sipho" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-navy mb-1.5">Date of birth <span class="text-red-500">*</span></label>
+                    <input type="date" id="p-child-dob" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-navy mb-1.5">Primary sport <span class="text-red-500">*</span></label>
+                  <select id="p-child-sport" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors bg-white">
+                    <option value="">Select a sport…</option>
+                    <option>Rugby</option><option>Wrestling</option><option>Soccer/Football</option><option>Cricket</option><option>Athletics</option><option>Tennis</option><option>Swimming</option><option>Netball</option><option>Chess</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-navy mb-1.5">School name <span class="text-slate text-xs font-normal">(optional)</span></label>
+                  <input type="text" id="p-child-school" placeholder="e.g. Rondebosch Boys' High" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm hover:border-navy transition-colors" />
+                </div>
+              </div>
+            </div>
+
             <div class="bg-mist rounded-xl p-4 space-y-3">
               <label class="flex gap-3 items-start cursor-pointer">
                 <input type="checkbox" id="p-consent1" required class="mt-0.5 w-4 h-4 accent-navy flex-shrink-0" />
@@ -1022,6 +1050,10 @@
     const province = document.getElementById('p-province').value;
     const rel      = document.getElementById('p-relationship').value;
     const source   = document.getElementById('p-source').value;
+    const childName  = document.getElementById('p-child-name').value.trim();
+    const childDob   = document.getElementById('p-child-dob').value;
+    const childSport = document.getElementById('p-child-sport').value;
+    const childSchool= document.getElementById('p-child-school').value.trim();
     const c1       = document.getElementById('p-consent1').checked;
     const c2       = document.getElementById('p-consent2').checked;
     const c3       = document.getElementById('p-consent3').checked;
@@ -1032,7 +1064,7 @@
     errEl.classList.add('hidden');
     sucEl.classList.add('hidden');
 
-    if (!name || !email || !phone || !province || !rel) {
+    if (!name || !email || !phone || !province || !rel || !childName || !childDob || !childSport) {
       errEl.textContent = 'Please fill in all required fields.';
       errEl.classList.remove('hidden');
       return;
@@ -1054,6 +1086,10 @@
       province:         province,
       relationship:     rel,
       heard_from:       source || null,
+      child_first_name: childName,
+      child_dob:        childDob,
+      child_sport:      childSport,
+      child_school:     childSchool || null,
       consent_guardian: c1,
       consent_popia:    c2,
       consent_media:    c3
