@@ -792,7 +792,10 @@
             <div id="p-error" class="hidden bg-red-50 text-red-600 text-sm px-4 py-3 rounded-xl border border-red-200"></div>
             <div id="p-success" class="hidden bg-sage bg-opacity-15 text-sage-dark text-sm px-4 py-4 rounded-xl border border-sage border-opacity-30">
               <div class="font-bold mb-1">✅ Thank you! Your registration has been received.</div>
-              <div>We'll send a verification email to the address you provided. Please check your inbox (and spam folder) and click the link to continue setting up your account.</div>
+              <div class="mb-3">We'll be in touch soon. Do you have another child to register?</div>
+              <button type="button" onclick="registerAnotherChild()" class="w-full bg-navy hover:bg-navy-dark text-white font-bold py-3 rounded-xl transition-all text-sm">
+                ➕ Register Another Child
+              </button>
             </div>
             <button type="submit" id="p-submit" class="w-full bg-amber hover:bg-amber-dark text-white font-bold py-4 rounded-xl transition-all shadow-md text-base">
               Start My Free Registration →
@@ -1207,6 +1210,26 @@
   );
 
   // ─── Parent application form ─────────────────────────────────────────────────
+  function registerAnotherChild() {
+    // Clear only the child-specific fields
+    ['p-child-name', 'p-child-dob', 'p-child-school'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('p-child-sport').value = '';
+    // Reset consent checkboxes (required fresh for each child)
+    ['p-consent1', 'p-consent2', 'p-consent3'].forEach(id => {
+      document.getElementById(id).checked = false;
+    });
+    // Hide success banner, restore submit button
+    document.getElementById('p-success').classList.add('hidden');
+    const btn = document.getElementById('p-submit');
+    btn.textContent = 'Register This Child →';
+    btn.disabled = false;
+    btn.classList.remove('hidden', 'opacity-75');
+    // Scroll smoothly to the child name field
+    document.getElementById('p-child-name').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
   async function submitParentForm(e) {
     e.preventDefault();
     const name     = document.getElementById('p-name').value.trim();
