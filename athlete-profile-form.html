@@ -137,7 +137,7 @@
 
 <header>
   <div class="brand">
-    <div class="shield" aria-hidden="true"></div>
+    <img src="scout-logo.png" alt="Scout Republic" style="width:56px;height:56px;flex:0 0 auto;" />
     <div style="text-align:left">
       <div style="font-weight:800;font-size:1.15rem;line-height:1">SCOUT REPUBLIC</div>
       <div style="font-size:.72rem;letter-spacing:2px;color:var(--amber)">TALENT • SAFELY SEEN</div>
@@ -208,12 +208,18 @@
           <div class="err-msg">Please enter a contact number.</div>
         </div>
         <div class="field">
-          <label>Province</label>
+          <label>Province / Country</label>
           <select name="province">
             <option value="">Select…</option>
-            <option>Eastern Cape</option><option>Free State</option><option>Gauteng</option>
-            <option>KwaZulu-Natal</option><option>Limpopo</option><option>Mpumalanga</option>
-            <option>Northern Cape</option><option>North West</option><option>Western Cape</option>
+            <optgroup label="South Africa">
+              <option>Eastern Cape</option><option>Free State</option><option>Gauteng</option>
+              <option>KwaZulu-Natal</option><option>Limpopo</option><option>Mpumalanga</option>
+              <option>Northern Cape</option><option>North West</option><option>Western Cape</option>
+            </optgroup>
+            <optgroup label="Other countries">
+              <option>Botswana</option><option>Namibia</option>
+            </optgroup>
+            <option>Other</option>
           </select>
         </div>
         <div class="field">
