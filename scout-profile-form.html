@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scout Republic — Scout Verification (Stage 2)</title>
+<style>
+  :root{
+    --navy:#1B4F72; --navy-dark:#143a54; --amber:#F39C12; --green:#27AE60;
+    --ink:#1f2a33; --muted:#5b6b78; --line:#e2e8ee; --bg:#f4f7fa; --card:#fff;
+    --err:#c0392b; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+  header{background:linear-gradient(135deg,var(--navy),var(--navy-dark));color:#fff;padding:28px 16px 24px;text-align:center}
+  .brand{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
+  .shield{width:44px;height:52px;background:var(--green);border-radius:8px 8px 22px 22px;position:relative;flex:0 0 auto;
+    box-shadow:0 4px 12px rgba(0,0,0,.25);border:2px solid var(--amber)}
+  .shield::after{content:"\2605";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:22px}
+  header h1{margin:0;font-size:1.45rem;letter-spacing:.3px}
+  header p{margin:8px auto 0;max-width:560px;color:#d7e3ee;font-size:.98rem}
+  .stage-pill{display:inline-block;margin-top:14px;background:var(--amber);color:#3a2a00;font-weight:700;font-size:.78rem;
+    letter-spacing:.6px;padding:6px 14px;border-radius:999px;text-transform:uppercase}
+  .intro{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:24px;box-shadow:0 2px 10px rgba(27,79,114,.05)}
+  .intro strong{color:var(--navy)}
+  form{margin-top:22px}
+  fieldset{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 20px 8px;margin:0 0 20px;box-shadow:0 2px 10px rgba(27,79,114,.05)}
+  legend{font-weight:700;color:var(--navy);font-size:1.08rem;padding:0 8px;display:flex;align-items:center;gap:8px}
+  legend .num{background:var(--navy);color:#fff;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.82rem;flex:0 0 auto}
+  .hint{color:var(--muted);font-size:.86rem;margin:4px 0 16px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+  @media (max-width:560px){ .grid{grid-template-columns:1fr} }
+  .field{display:flex;flex-direction:column;margin-bottom:16px}
+  .field.full{grid-column:1 / -1}
+  label{font-weight:600;font-size:.92rem;margin-bottom:6px}
+  .req{color:var(--err)}
+  input[type=text],input[type=email],input[type=tel],input[type=date],input[type=number],input[type=url],select,textarea{
+    font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:12px 13px;width:100%;transition:border-color .15s,box-shadow .15s}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(27,79,114,.12)}
+  textarea{min-height:92px;resize:vertical}
+  input[type=file]{font:inherit;width:100%;padding:10px 0}
+  .options{display:flex;flex-wrap:wrap;gap:10px}
+  .opt{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:10px;padding:9px 13px;cursor:pointer;font-size:.92rem;background:#fff;user-select:none}
+  .opt:hover{border-color:var(--navy)}
+  .opt input{width:18px;height:18px;accent-color:var(--green);margin:0}
+  .consent .opt{width:100%;align-items:flex-start}
+  .consent .opt span{font-size:.9rem}
+  .submit{width:100%;background:var(--green);color:#fff;border:none;border-radius:12px;font-size:1.08rem;font-weight:700;padding:16px;cursor:pointer;letter-spacing:.3px;box-shadow:0 6px 16px rgba(39,174,96,.28);transition:transform .08s,background .15s}
+  .submit:hover{background:#1f8a4c}
+  .submit:active{transform:translateY(1px)}
+  .submit:disabled{background:#9fb7a9;box-shadow:none;cursor:not-allowed}
+  .err-msg{color:var(--err);font-size:.82rem;margin-top:5px;display:none}
+  .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--err)}
+  .field.invalid .err-msg{display:block}
+  .note{font-size:.82rem;color:var(--muted);margin-top:14px;text-align:center}
+  .safe{display:flex;gap:10px;align-items:flex-start;background:#fdf3e3;border:1px solid #f6d9a8;border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:.86rem;color:#7a5310}
+  .safe b{color:#b9770d}
+  #success{display:none;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:40px 24px;margin-top:24px;box-shadow:0 2px 10px rgba(27,79,114,.06)}
+  #success .tick{width:64px;height:64px;border-radius:50%;background:var(--green);color:#fff;font-size:34px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+  #success h2{color:var(--navy);margin:0 0 8px}
+  footer{text-align:center;color:var(--muted);font-size:.8rem;padding:24px 16px 8px}
+  footer a{color:var(--navy)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="shield" aria-hidden="true"></div>
+    <div style="text-align:left">
+      <div style="font-weight:800;font-size:1.15rem;line-height:1">SCOUT REPUBLIC</div>
+      <div style="font-size:.72rem;letter-spacing:2px;color:var(--amber)">TALENT • SAFELY SEEN</div>
+    </div>
+  </div>
+  <h1>Scout Verification &amp; Profile</h1>
+  <p>Thank you for your interest in joining Scout Republic. Because our members are children, we verify every scout carefully. This step gathers your credentials so our team can approve your access.</p>
+  <span class="stage-pill">Stage 2 · Scout Verification</span>
+</header>
+
+<div class="wrap">
+
+  <div class="intro">
+    <p style="margin:0 0 8px"><strong>Takes about 8–10 minutes.</strong> Works on phone or computer. Fields marked <span class="req">*</span> are required.</p>
+    <p style="margin:0;color:var(--muted);font-size:.9rem">Access to any athlete is only granted after our team has verified your identity and credentials. All scouts agree to contact parents only — never children directly.</p>
+  </div>
+
+  <form id="scoutForm" novalidate>
+
+    <!-- 1. Scout & organisation -->
+    <fieldset>
+      <legend><span class="num">1</span> You &amp; Your Organisation</legend>
+      <p class="hint">So we can match this to your initial scout application.</p>
+      <div class="grid">
+        <div class="field">
+          <label>First name(s) <span class="req">*</span></label>
+          <input type="text" name="first_name" required>
+          <div class="err-msg">Please enter your first name.</div>
+        </div>
+        <div class="field">
+          <label>Surname <span class="req">*</span></label>
+          <input type="text" name="surname" required>
+          <div class="err-msg">Please enter your surname.</div>
+        </div>
+        <div class="field">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" name="email" required placeholder="Same email you applied with">
+          <div class="err-msg">Please enter a valid email.</div>
+        </div>
+        <div class="field">
+          <label>Mobile number <span class="req">*</span></label>
+          <input type="tel" name="phone" required>
+          <div class="err-msg">Please enter a contact number.</div>
+        </div>
+        <div class="field">
+          <label>Organisation / club / academy <span class="req">*</span></label>
+          <input type="text" name="organisation" required>
+          <div class="err-msg">Please enter your organisation.</div>
+        </div>
+        <div class="field">
+          <label>Your role / title <span class="req">*</span></label>
+          <input type="text" name="role" required placeholder="e.g. Head Scout, Talent Manager">
+          <div class="err-msg">Please enter your role.</div>
+        </div>
+        <div class="field">
+          <label>Website</label>
+          <input type="url" name="website" placeholder="https://...">
+        </div>
+        <div class="field">
+          <label>LinkedIn profile</label>
+          <input type="url" name="linkedin" placeholder="https://linkedin.com/in/...">
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- 2. Scouting focus -->
+    <fieldset>
+      <legend><span class="num">2</span> Scouting Focus</legend>
+      <p class="hint">Which sports and levels do you scout for?</p>
+      <div class="field full">
+        <label>Sports you scout <span class="req">*</span></label>
+        <div class="options" id="sports">
+          <label class="opt"><input type="checkbox" name="sports" value="Rugby"><span>Rugby</span></label>
+          <label class="opt"><input type="checkbox" name="sports" value="Wrestling"><span>Wrestling</span></label>
+          <label class="opt"><input type="checkbox" name="sports" value="Soccer / Football"><span>Soccer / Football</span></label>
+          <label class="opt"><input type="checkbox" name="sports" value="Cricket"><span>Cricket</span></label>
+          <label class="opt"><input type="checkbox" name="sports" value="Athletics"><span>Athletics</span></label>
+          <label class="opt"><input type="checkbox" name="sports" value="Tennis"><span>Tennis</span></label>
+          <label class="opt"><input type="checkbox" name="sports" value="Swimming"><span>Swimming</span></label>
+          <label class="opt"><input type="checkbox" name="sports" value="Netball"><span>Netball</span></label>
+          <label class="opt"><input type="checkbox" name="sports" value="Chess"><span>Chess</span></label>
+        </div>
+        <div class="err-msg" id="sportsErr">Please select at least one sport.</div>
+      </div>
+      <div class="grid">
+        <div class="field">
+          <label>Levels you recruit for</label>
+          <select name="level">
+            <option value="">Select…</option>
+            <option>School</option><option>Club</option><option>Provincial</option>
+            <option>National</option><option>Academy / Professional</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Age groups of interest</label>
+          <input type="text" name="age_groups" placeholder="e.g. U13–U18">
+        </div>
+        <div class="field full">
+          <label>Provinces / regions you cover</label>
+          <input type="text" name="regions" placeholder="e.g. Western Cape, Eastern Cape">
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- 3. Credentials & verification -->
+    <fieldset>
+      <legend><span class="num">3</span> Credentials &amp; Verification</legend>
+      <div class="safe">
+        <span>🛡️</span>
+        <div><b>Why we ask.</b> Because you may be given access to profiles of minors, we verify accreditation and identity. Documents are private and seen only by our vetting team.</div>
+      </div>
+      <div class="grid">
+        <div class="field">
+          <label>Years scouting / coaching</label>
+          <input type="number" name="years_experience" min="0" max="60">
+        </div>
+        <div class="field">
+          <label>Accreditation / affiliation</label>
+          <input type="text" name="accreditation" placeholder="e.g. SA Rugby, CSA, SAFA">
+        </div>
+        <div class="field full">
+          <label>Registration / accreditation number (if any)</label>
+          <input type="text" name="accreditation_number">
+        </div>
+      </div>
+      <div class="field full">
+        <label>Verification documents (up to 2)</label>
+        <input type="file" name="documents" accept="image/*,application/pdf" multiple>
+        <div class="hint" style="margin:6px 0 0">ID, accreditation letter, or organisation letterhead. PDF/JPG/PNG, up to 5 MB each.</div>
+      </div>
+    </fieldset>
+
+    <!-- 4. References -->
+    <fieldset>
+      <legend><span class="num">4</span> Professional References</legend>
+      <p class="hint">Two people who can confirm your role and standing.</p>
+      <div class="grid">
+        <div class="field">
+          <label>Reference 1 — name</label>
+          <input type="text" name="ref1_name">
+        </div>
+        <div class="field">
+          <label>Reference 1 — organisation &amp; contact</label>
+          <input type="text" name="ref1_contact" placeholder="Org, email or phone">
+        </div>
+        <div class="field">
+          <label>Reference 2 — name</label>
+          <input type="text" name="ref2_name">
+        </div>
+        <div class="field">
+          <label>Reference 2 — organisation &amp; contact</label>
+          <input type="text" name="ref2_contact" placeholder="Org, email or phone">
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- 5. Safeguarding -->
+    <fieldset>
+      <legend><span class="num">5</span> Safeguarding</legend>
+      <p class="hint">Child safety is the heart of Scout Republic. These are required.</p>
+      <div class="consent">
+        <label class="opt"><input type="checkbox" name="safeguard_clearance" required><span>I confirm I hold, or am willing to provide, a valid <b>police clearance / working-with-children check</b>. <span class="req">*</span></span></label>
+        <label class="opt"><input type="checkbox" name="safeguard_history" required><span>I confirm I have <b>no history</b> that would bar me from working with or around minors. <span class="req">*</span></span></label>
+        <label class="opt"><input type="checkbox" name="safeguard_conduct" required><span>I agree to Scout Republic’s <b>code of conduct</b> and to contact <b>parents/guardians only — never children directly</b>. <span class="req">*</span></span></label>
+      </div>
+    </fieldset>
+
+    <!-- 6. Declarations & consent -->
+    <fieldset>
+      <legend><span class="num">6</span> Declarations (POPIA)</legend>
+      <div class="consent">
+        <label class="opt"><input type="checkbox" name="consent_accurate" required><span>I confirm the information provided is <b>true and accurate</b>. <span class="req">*</span></span></label>
+        <label class="opt"><input type="checkbox" name="consent_verify" required><span>I consent to Scout Republic <b>storing and processing</b> this information and <b>carrying out verification checks</b>. <span class="req">*</span></span></label>
+      </div>
+      <div class="grid" style="margin-top:16px">
+        <div class="field">
+          <label>Type your full name as digital signature <span class="req">*</span></label>
+          <input type="text" name="signature" required>
+          <div class="err-msg">Please type your name to sign.</div>
+        </div>
+        <div class="field">
+          <label>Date <span class="req">*</span></label>
+          <input type="date" name="signed_date" required>
+          <div class="err-msg">Please select a date.</div>
+        </div>
+      </div>
+    </fieldset>
+
+    <button type="submit" class="submit" id="submitBtn">Submit for Verification</button>
+    <p class="note" id="statusNote">Your details are stored securely in the EU (POPIA-adequate) and used only for scout verification.</p>
+  </form>
+
+  <div id="success">
+    <div class="tick">✓</div>
+    <h2>Submitted — thank you!</h2>
+    <p style="color:var(--muted);max-width:460px;margin:0 auto">
+      We’ve received your verification details. Our team will review them and be in touch once your scout access is approved. This usually takes a few working days.
+    </p>
+  </div>
+
+  <footer>
+    Scout Republic · Talent, safely seen · <a href="https://scoutrepublic.online">scoutrepublic.online</a><br>
+    Questions? Email <a href="mailto:info@scoutrepublic.online">info@scoutrepublic.online</a>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://lumrdbztczgqlewcoklg.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_Chcfx3KNZcgJhyrHuqFcww_OaH_n8d8";
+  const STORAGE_BUCKET = "scout-verification";
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const form = document.getElementById('scoutForm');
+  const btn = document.getElementById('submitBtn');
+  const note = document.getElementById('statusNote');
+
+  document.querySelector('[name=signed_date]').valueAsDate = new Date();
+
+  function validate(){
+    let ok = true;
+    form.querySelectorAll('[required]').forEach(el => {
+      const field = el.closest('.field');
+      let bad = false;
+      if (el.type === 'checkbox') bad = !el.checked;
+      else if (el.type === 'email') bad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+      else bad = !el.value.trim();
+      if (field){ field.classList.toggle('invalid', bad); }
+      if (bad) ok = false;
+    });
+    // at least one sport
+    const sportsChecked = form.querySelectorAll('[name=sports]:checked').length > 0;
+    document.getElementById('sportsErr').style.display = sportsChecked ? 'none' : 'block';
+    if (!sportsChecked) ok = false;
+    return ok;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    note.style.color = '';
+    if (!validate()){
+      note.style.color = 'var(--err)';
+      note.textContent = 'Please complete the required fields and tick all declarations.';
+      const firstBad = form.querySelector('.field.invalid');
+      if (firstBad) firstBad.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+    note.textContent = 'Uploading — please keep this page open.';
+
+    try {
+      const fd = new FormData(form);
+      const docPaths = [];
+      const files = form.querySelector('[name=documents]').files;
+      for (let i = 0; i < Math.min(files.length, 2); i++){
+        const f = files[i];
+        if (f.size > 5 * 1024 * 1024) throw new Error(`"${f.name}" is larger than 5 MB.`);
+        const safeName = f.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+        const path = `verification/${Date.now()}_${i}_${safeName}`;
+        const { error: upErr } = await sb.storage.from(STORAGE_BUCKET).upload(path, f, { upsert:false });
+        if (upErr) throw upErr;
+        docPaths.push(path);
+      }
+
+      const sports = fd.getAll('sports');
+
+      const row = {
+        first_name: fd.get('first_name'),
+        surname: fd.get('surname'),
+        email: fd.get('email'),
+        phone: fd.get('phone'),
+        organisation: fd.get('organisation'),
+        role: fd.get('role'),
+        website: fd.get('website') || null,
+        linkedin: fd.get('linkedin') || null,
+        sports: sports,
+        level: fd.get('level') || null,
+        age_groups: fd.get('age_groups') || null,
+        regions: fd.get('regions') || null,
+        years_experience: fd.get('years_experience') ? Number(fd.get('years_experience')) : null,
+        accreditation: fd.get('accreditation') || null,
+        accreditation_number: fd.get('accreditation_number') || null,
+        document_paths: docPaths,
+        ref1_name: fd.get('ref1_name') || null,
+        ref1_contact: fd.get('ref1_contact') || null,
+        ref2_name: fd.get('ref2_name') || null,
+        ref2_contact: fd.get('ref2_contact') || null,
+        safeguard_clearance: !!fd.get('safeguard_clearance'),
+        safeguard_history: !!fd.get('safeguard_history'),
+        safeguard_conduct: !!fd.get('safeguard_conduct'),
+        consent_accurate: !!fd.get('consent_accurate'),
+        consent_verify: !!fd.get('consent_verify'),
+        signature: fd.get('signature'),
+        signed_date: fd.get('signed_date')
+      };
+
+      const { error: insErr } = await sb.from('scout_profiles').insert([row]);
+      if (insErr) throw insErr;
+
+      form.style.display = 'none';
+      document.getElementById('success').style.display = 'block';
+      document.getElementById('success').scrollIntoView({behavior:'smooth', block:'start'});
+
+    } catch (err){
+      console.error(err);
+      btn.disabled = false;
+      btn.textContent = 'Submit for Verification';
+      note.style.color = 'var(--err)';
+      note.textContent = 'Sorry — something went wrong: ' + (err.message || 'please try again, or email info@scoutrepublic.online.');
+    }
+  });
+</script>
+</body>
+</html>
