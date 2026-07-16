@@ -250,6 +250,16 @@ footer a{color:var(--navy)}
 <div class="err-msg">Please choose a primary sport.</div>
 </div>
 <div class="field">
+<label>Secondary sport <span style="font-weight:400;font-size:.8rem;color:var(--muted)">(optional)</span></label>
+<select name="secondary_sport">
+<option value="">None / not applicable</option>
+<option>Rugby</option><option>Wrestling</option><option>Soccer / Football</option>
+<option>Cricket</option><option>Athletics</option><option>Tennis</option>
+<option>Swimming</option><option>Netball</option><option>Dancesport</option><option>Chess</option>
+<option>Fishing</option><option>Hunting</option><option>Marimba</option><option>Drum Majorettes</option>
+</select>
+</div>
+<div class="field">
 <label>Position / discipline</label>
 <input type="text" name="position" placeholder="e.g. Fly-half, 100m sprint, Goalkeeper">
 </div>
@@ -496,6 +506,7 @@ province: fd.get('province') || null,
 town: fd.get('town') || null,
 school: fd.get('school') || null,
 primary_sport: fd.get('primary_sport'),
+secondary_sport: fd.get('secondary_sport') || null,
 position: fd.get('position') || null,
 current_club: fd.get('current_club') || null,
 years_playing: fd.get('years_playing') ? Number(fd.get('years_playing')) : null,
