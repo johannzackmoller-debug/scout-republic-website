@@ -5,530 +5,536 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scout Republic — Athlete Profile (Stage 2)</title>
 <style>
-  :root{
-    --navy:#1B4F72;
-    --navy-dark:#143a54;
-    --amber:#F39C12;
-    --green:#27AE60;
-    --ink:#1f2a33;
-    --muted:#5b6b78;
-    --line:#e2e8ee;
-    --bg:#f4f7fa;
-    --card:#ffffff;
-    --err:#c0392b;
-    --radius:14px;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:var(--bg);color:var(--ink);line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+:root{
+--navy:#1B4F72;
+--navy-dark:#143a54;
+--amber:#F39C12;
+--green:#27AE60;
+--ink:#1f2a33;
+--muted:#5b6b78;
+--line:#e2e8ee;
+--bg:#f4f7fa;
+--card:#ffffff;
+--err:#c0392b;
+--radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--ink);line-height:1.55;
+-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
 
-  /* Header */
-  header{
-    background:linear-gradient(135deg,var(--navy),var(--navy-dark));
-    color:#fff;padding:28px 16px 24px;text-align:center;
-  }
-  .brand{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
-  .shield{
-    width:44px;height:52px;background:var(--green);
-    border-radius:8px 8px 22px 22px;position:relative;flex:0 0 auto;
-    box-shadow:0 4px 12px rgba(0,0,0,.25);border:2px solid var(--amber);
-  }
-  .shield::after{content:"★";position:absolute;inset:0;display:flex;align-items:center;
-    justify-content:center;color:var(--amber);font-size:22px}
-  header h1{margin:0;font-size:1.45rem;letter-spacing:.3px}
-  header p{margin:8px auto 0;max-width:560px;color:#d7e3ee;font-size:.98rem}
-  .stage-pill{display:inline-block;margin-top:14px;background:var(--amber);color:#3a2a00;
-    font-weight:700;font-size:.78rem;letter-spacing:.6px;padding:6px 14px;border-radius:999px;text-transform:uppercase}
+/* Header */
+header{
+background:linear-gradient(135deg,var(--navy),var(--navy-dark));
+color:#fff;padding:28px 16px 24px;text-align:center;
+}
+.brand{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
+.shield{
+width:44px;height:52px;background:var(--green);
+border-radius:8px 8px 22px 22px;position:relative;flex:0 0 auto;
+box-shadow:0 4px 12px rgba(0,0,0,.25);border:2px solid var(--amber);
+}
+.shield::after{content:"★";position:absolute;inset:0;display:flex;align-items:center;
+justify-content:center;color:var(--amber);font-size:22px}
+header h1{margin:0;font-size:1.45rem;letter-spacing:.3px}
+header p{margin:8px auto 0;max-width:560px;color:#d7e3ee;font-size:.98rem}
+.stage-pill{display:inline-block;margin-top:14px;background:var(--amber);color:#3a2a00;
+font-weight:700;font-size:.78rem;letter-spacing:.6px;padding:6px 14px;border-radius:999px;text-transform:uppercase}
 
-  /* Intro card */
-  .intro{
-    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:20px 20px;margin-top:24px;box-shadow:0 2px 10px rgba(27,79,114,.05)
-  }
-  .intro strong{color:var(--navy)}
+/* Intro card */
+.intro{
+background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+padding:20px 20px;margin-top:24px;box-shadow:0 2px 10px rgba(27,79,114,.05)
+}
+.intro strong{color:var(--navy)}
 
-  /* Sections */
-  form{margin-top:22px}
-  fieldset{
-    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:20px 20px 8px;margin:0 0 20px;box-shadow:0 2px 10px rgba(27,79,114,.05)
-  }
-  legend{
-    font-weight:700;color:var(--navy);font-size:1.08rem;padding:0 8px;
-    display:flex;align-items:center;gap:8px
-  }
-  legend .num{
-    background:var(--navy);color:#fff;width:24px;height:24px;border-radius:50%;
-    display:inline-flex;align-items:center;justify-content:center;font-size:.82rem;flex:0 0 auto
-  }
-  .hint{color:var(--muted);font-size:.86rem;margin:4px 0 16px}
+/* Sections */
+form{margin-top:22px}
+fieldset{
+background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+padding:20px 20px 8px;margin:0 0 20px;box-shadow:0 2px 10px rgba(27,79,114,.05)
+}
+legend{
+font-weight:700;color:var(--navy);font-size:1.08rem;padding:0 8px;
+display:flex;align-items:center;gap:8px
+}
+legend .num{
+background:var(--navy);color:#fff;width:24px;height:24px;border-radius:50%;
+display:inline-flex;align-items:center;justify-content:center;font-size:.82rem;flex:0 0 auto
+}
+.hint{color:var(--muted);font-size:.86rem;margin:4px 0 16px}
 
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
-  @media (max-width:560px){ .grid{grid-template-columns:1fr} }
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+@media (max-width:560px){ .grid{grid-template-columns:1fr} }
 
-  .field{display:flex;flex-direction:column;margin-bottom:16px}
-  .field.full{grid-column:1 / -1}
-  label{font-weight:600;font-size:.92rem;margin-bottom:6px}
-  .req{color:var(--err)}
-  input[type=text],input[type=email],input[type=tel],input[type=date],
-  input[type=number],input[type=url],select,textarea{
-    font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);
-    border-radius:10px;padding:12px 13px;width:100%;transition:border-color .15s,box-shadow .15s
-  }
-  input:focus,select:focus,textarea:focus{
-    outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(27,79,114,.12)
-  }
-  textarea{min-height:92px;resize:vertical}
-  input[type=file]{font:inherit;width:100%;padding:10px 0}
+.field{display:flex;flex-direction:column;margin-bottom:16px}
+.field.full{grid-column:1 / -1}
+label{font-weight:600;font-size:.92rem;margin-bottom:6px}
+.req{color:var(--err)}
+input[type=text],input[type=email],input[type=tel],input[type=date],
+input[type=number],input[type=url],select,textarea{
+font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);
+border-radius:10px;padding:12px 13px;width:100%;transition:border-color .15s,box-shadow .15s
+}
+input:focus,select:focus,textarea:focus{
+outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(27,79,114,.12)
+}
+textarea{min-height:92px;resize:vertical}
+input[type=file]{font:inherit;width:100%;padding:10px 0}
 
-  /* Checkbox / radio groups */
-  .options{display:flex;flex-wrap:wrap;gap:10px}
-  .opt{
-    display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);
-    border-radius:10px;padding:9px 13px;cursor:pointer;font-size:.92rem;background:#fff;user-select:none
-  }
-  .opt:hover{border-color:var(--navy)}
-  .opt input{width:18px;height:18px;accent-color:var(--green);margin:0}
-  .consent .opt{width:100%;align-items:flex-start;border-color:var(--line)}
-  .consent .opt span{font-size:.9rem}
+/* Checkbox / radio groups */
+.options{display:flex;flex-wrap:wrap;gap:10px}
+.opt{
+display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);
+border-radius:10px;padding:9px 13px;cursor:pointer;font-size:.92rem;background:#fff;user-select:none
+}
+.opt:hover{border-color:var(--navy)}
+.opt input{width:18px;height:18px;accent-color:var(--green);margin:0}
+.consent .opt{width:100%;align-items:flex-start;border-color:var(--line)}
+.consent .opt span{font-size:.9rem}
 
-  /* Buttons */
-  .add-link{
-    background:none;border:1.5px dashed var(--navy);color:var(--navy);font:inherit;font-weight:600;
-    border-radius:10px;padding:10px 14px;cursor:pointer;margin-top:2px
-  }
-  .add-link:hover{background:rgba(27,79,114,.06)}
-  .submit{
-    width:100%;background:var(--green);color:#fff;border:none;border-radius:12px;
-    font-size:1.08rem;font-weight:700;padding:16px;cursor:pointer;letter-spacing:.3px;
-    box-shadow:0 6px 16px rgba(39,174,96,.28);transition:transform .08s,background .15s
-  }
-  .submit:hover{background:#1f8a4c}
-  .submit:active{transform:translateY(1px)}
-  .submit:disabled{background:#9fb7a9;box-shadow:none;cursor:not-allowed}
+/* Buttons */
+.add-link{
+background:none;border:1.5px dashed var(--navy);color:var(--navy);font:inherit;font-weight:600;
+border-radius:10px;padding:10px 14px;cursor:pointer;margin-top:2px
+}
+.add-link:hover{background:rgba(27,79,114,.06)}
+.submit{
+width:100%;background:var(--green);color:#fff;border:none;border-radius:12px;
+font-size:1.08rem;font-weight:700;padding:16px;cursor:pointer;letter-spacing:.3px;
+box-shadow:0 6px 16px rgba(39,174,96,.28);transition:transform .08s,background .15s
+}
+.submit:hover{background:#1f8a4c}
+.submit:active{transform:translateY(1px)}
+.submit:disabled{background:#9fb7a9;box-shadow:none;cursor:not-allowed}
 
-  .err-msg{color:var(--err);font-size:.82rem;margin-top:5px;display:none}
-  .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--err)}
-  .field.invalid .err-msg{display:block}
+.err-msg{color:var(--err);font-size:.82rem;margin-top:5px;display:none}
+.field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--err)}
+.field.invalid .err-msg{display:block}
 
-  .note{font-size:.82rem;color:var(--muted);margin-top:14px;text-align:center}
-  .safe{
-    display:flex;gap:10px;align-items:flex-start;background:#eef7f1;border:1px solid #cfe9da;
-    border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:.86rem;color:#1e5a3a
-  }
-  .safe b{color:var(--green)}
+.note{font-size:.82rem;color:var(--muted);margin-top:14px;text-align:center}
+.safe{
+display:flex;gap:10px;align-items:flex-start;background:#eef7f1;border:1px solid #cfe9da;
+border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:.86rem;color:#1e5a3a
+}
+.safe b{color:var(--green)}
 
-  /* Success */
-  #success{display:none;text-align:center;background:var(--card);border:1px solid var(--line);
-    border-radius:var(--radius);padding:40px 24px;margin-top:24px;box-shadow:0 2px 10px rgba(27,79,114,.06)}
-  #success .tick{width:64px;height:64px;border-radius:50%;background:var(--green);color:#fff;
-    font-size:34px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
-  #success h2{color:var(--navy);margin:0 0 8px}
-  footer{text-align:center;color:var(--muted);font-size:.8rem;padding:24px 16px 8px}
-  footer a{color:var(--navy)}
+/* Success */
+#success{display:none;text-align:center;background:var(--card);border:1px solid var(--line);
+border-radius:var(--radius);padding:40px 24px;margin-top:24px;box-shadow:0 2px 10px rgba(27,79,114,.06)}
+#success .tick{width:64px;height:64px;border-radius:50%;background:var(--green);color:#fff;
+font-size:34px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+#success h2{color:var(--navy);margin:0 0 8px}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:24px 16px 8px}
+footer a{color:var(--navy)}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">
-    <img src="scout-logo.png" alt="Scout Republic" style="width:56px;height:56px;flex:0 0 auto;" />
-    <div style="text-align:left">
-      <div style="font-weight:800;font-size:1.15rem;line-height:1">SCOUT REPUBLIC</div>
-      <div style="font-size:.72rem;letter-spacing:2px;color:var(--amber)">TALENT • SAFELY SEEN</div>
-    </div>
-  </div>
-  <h1>Build Your Child’s Athlete Profile</h1>
-  <p>Thank you for registering with Scout Republic. This next step helps us build a complete, verified profile so the right scouts, coaches and academies can recognise your child’s talent — always with your control.</p>
-  <span class="stage-pill">Stage 2 · Athlete Detail</span>
+<div class="brand">
+<img src="scout-logo.png" alt="Scout Republic" style="width:56px;height:56px;flex:0 0 auto;" />
+<div style="text-align:left">
+<div style="font-weight:800;font-size:1.15rem;line-height:1">SCOUT REPUBLIC</div>
+<div style="font-size:.72rem;letter-spacing:2px;color:var(--amber)">TALENT • SAFELY SEEN</div>
+</div>
+</div>
+<h1>Build Your Child's Athlete Profile</h1>
+<p>Thank you for registering with Scout Republic. This next step helps us build a complete, verified profile so the right scouts, coaches and academies can recognise your child's talent — always with your control.</p>
+<span class="stage-pill">Stage 2 · Athlete Detail</span>
 </header>
 
 <div class="wrap">
 
-  <div class="intro">
-    <p style="margin:0 0 8px"><strong>Takes about 8–10 minutes.</strong> You can complete it on your phone or computer. Fields marked <span class="req">*</span> are required — everything else is optional and can be added later.</p>
-    <p style="margin:0;color:var(--muted);font-size:.9rem">You are completing this as the parent or legal guardian of the child. Nothing you submit is visible to anyone until our team has reviewed and approved it, and you can change your child’s visibility at any time.</p>
-  </div>
+<div class="intro">
+<p style="margin:0 0 8px"><strong>Takes about 8–10 minutes.</strong> You can complete it on your phone or computer. Fields marked <span class="req">*</span> are required — everything else is optional and can be added later.</p>
+<p style="margin:0;color:var(--muted);font-size:.9rem">You are completing this as the parent or legal guardian of the child. Nothing you submit is visible to anyone until our team has reviewed and approved it, and you can change your child's visibility at any time.</p>
+</div>
 
-  <form id="profileForm" novalidate>
+<form id="profileForm" novalidate>
 
-    <!-- 1. Match to existing registration -->
-    <fieldset>
-      <legend><span class="num">1</span> Athlete &amp; Guardian</legend>
-      <p class="hint">So we can link this to your existing Scout Republic registration. It’s completely fine if your child’s surname differs from yours — for example through adoption, remarriage or a blended family.</p>
-      <div class="grid">
-        <div class="field">
-          <label>Child’s first name(s) <span class="req">*</span></label>
-          <input type="text" name="child_first_name" required>
-          <div class="err-msg">Please enter your child’s first name.</div>
-        </div>
-        <div class="field">
-          <label>Child’s surname <span class="req">*</span></label>
-          <input type="text" name="child_surname" required>
-          <div class="err-msg">Please enter your child’s surname.</div>
-        </div>
-        <div class="field">
-          <label>Child’s date of birth <span class="req">*</span></label>
-          <input type="date" name="child_dob" required>
-          <div class="err-msg">Please enter a date of birth.</div>
-        </div>
-        <div class="field">
-          <label>Relationship to child <span class="req">*</span></label>
-          <select name="relationship" required>
-            <option value="">Select…</option>
-            <option>Mother</option><option>Father</option>
-            <option>Legal guardian</option><option>Adoptive parent</option>
-            <option>Grandparent</option><option>Other (with legal authority)</option>
-          </select>
-          <div class="err-msg">Please select your relationship.</div>
-        </div>
-        <div class="field">
-          <label>Your first name(s) <span class="req">*</span></label>
-          <input type="text" name="guardian_first_name" required>
-          <div class="err-msg">Please enter your first name.</div>
-        </div>
-        <div class="field">
-          <label>Your surname <span class="req">*</span></label>
-          <input type="text" name="guardian_surname" required>
-          <div class="err-msg">Please enter your surname.</div>
-        </div>
-        <div class="field">
-          <label>Your email <span class="req">*</span></label>
-          <input type="email" name="guardian_email" required placeholder="Same email you registered with">
-          <div class="err-msg">Please enter a valid email.</div>
-        </div>
-        <div class="field">
-          <label>Your mobile number <span class="req">*</span></label>
-          <input type="tel" name="guardian_phone" required placeholder="e.g. 082 123 4567">
-          <div class="err-msg">Please enter a contact number.</div>
-        </div>
-        <div class="field">
-          <label>Province / Country</label>
-          <select name="province">
-            <option value="">Select…</option>
-            <optgroup label="South Africa">
-              <option>Eastern Cape</option><option>Free State</option><option>Gauteng</option>
-              <option>KwaZulu-Natal</option><option>Limpopo</option><option>Mpumalanga</option>
-              <option>Northern Cape</option><option>North West</option><option>Western Cape</option>
-            </optgroup>
-            <optgroup label="Other countries">
-              <option>Botswana</option><option>Namibia</option>
-            </optgroup>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Town / city</label>
-          <input type="text" name="town">
-        </div>
-        <div class="field">
-          <label>School</label>
-          <input type="text" name="school">
-        </div>
-      </div>
-    </fieldset>
+<!-- 1. Match to existing registration -->
+<fieldset>
+<legend><span class="num">1</span> Athlete &amp; Guardian</legend>
+<p class="hint">So we can link this to your existing Scout Republic registration. It's completely fine if your child's surname differs from yours — for example through adoption, remarriage or a blended family.</p>
+<div class="grid">
+<div class="field">
+<label>Child's first name(s) <span class="req">*</span></label>
+<input type="text" name="child_first_name" required>
+<div class="err-msg">Please enter your child's first name.</div>
+</div>
+<div class="field">
+<label>Child's surname <span class="req">*</span></label>
+<input type="text" name="child_surname" required>
+<div class="err-msg">Please enter your child's surname.</div>
+</div>
+<div class="field">
+<label>Child's date of birth <span class="req">*</span></label>
+<input type="date" name="child_dob" required>
+<div class="err-msg">Please enter a date of birth.</div>
+</div>
+<div class="field">
+<label>Relationship to child <span class="req">*</span></label>
+<select name="relationship" required>
+<option value="">Select…</option>
+<option>Mother</option><option>Father</option>
+<option>Legal guardian</option><option>Adoptive parent</option>
+<option>Grandparent</option><option>Other (with legal authority)</option>
+</select>
+<div class="err-msg">Please select your relationship.</div>
+</div>
+<div class="field">
+<label>Your first name(s) <span class="req">*</span></label>
+<input type="text" name="guardian_first_name" required>
+<div class="err-msg">Please enter your first name.</div>
+</div>
+<div class="field">
+<label>Your surname <span class="req">*</span></label>
+<input type="text" name="guardian_surname" required>
+<div class="err-msg">Please enter your surname.</div>
+</div>
+<div class="field">
+<label>Your email <span class="req">*</span></label>
+<input type="email" name="guardian_email" required placeholder="Same email you registered with">
+<div class="err-msg">Please enter a valid email.</div>
+</div>
+<div class="field">
+<label>Your mobile number <span class="req">*</span></label>
+<input type="tel" name="guardian_phone" required placeholder="e.g. 082 123 4567">
+<div class="err-msg">Please enter a contact number.</div>
+</div>
+<div class="field">
+<label>Province / Country</label>
+<select name="province">
+<option value="">Select…</option>
+<optgroup label="South Africa">
+<option>Eastern Cape</option><option>Free State</option><option>Gauteng</option>
+<option>KwaZulu-Natal</option><option>Limpopo</option><option>Mpumalanga</option>
+<option>Northern Cape</option><option>North West</option><option>Western Cape</option>
+</optgroup>
+<optgroup label="Other countries">
+<option>Botswana</option><option>Namibia</option>
+</optgroup>
+<option>Other</option>
+</select>
+</div>
+<div class="field">
+<label>Town / city</label>
+<input type="text" name="town">
+</div>
+<div class="field">
+<label>School</label>
+<input type="text" name="school">
+</div>
+</div>
+</fieldset>
 
-    <!-- 2. Primary sport -->
-    <fieldset>
-      <legend><span class="num">2</span> Primary Sport</legend>
-      <p class="hint">The main sport you’d like scouts to consider your child for.</p>
-      <div class="grid">
-        <div class="field">
-          <label>Primary sport <span class="req">*</span></label>
-          <select name="primary_sport" required>
-            <option value="">Select…</option>
-            <option>Rugby</option><option>Wrestling</option><option>Soccer / Football</option>
-            <option>Cricket</option><option>Athletics</option><option>Tennis</option>
-            <option>Swimming</option><option>Netball</option><option>Chess</option>
-          </select>
-          <div class="err-msg">Please choose a primary sport.</div>
-        </div>
-        <div class="field">
-          <label>Position / discipline</label>
-          <input type="text" name="position" placeholder="e.g. Fly-half, 100m sprint, Goalkeeper">
-        </div>
-        <div class="field">
-          <label>Current club / team / academy</label>
-          <input type="text" name="current_club">
-        </div>
-        <div class="field">
-          <label>Years playing this sport</label>
-          <input type="number" name="years_playing" min="0" max="20">
-        </div>
-      </div>
-    </fieldset>
+<!-- 2. Primary sport -->
+<fieldset>
+<legend><span class="num">2</span> Primary Sport</legend>
+<p class="hint">The main sport you'd like scouts to consider your child for.</p>
+<div class="grid">
+<div class="field">
+<label>Primary sport <span class="req">*</span></label>
+<select name="primary_sport" required>
+<option value="">Select…</option>
+<option>Rugby</option><option>Wrestling</option><option>Soccer / Football</option>
+<option>Cricket</option><option>Athletics</option><option>Tennis</option>
+<option>Swimming</option><option>Netball</option><option>Dancesport</option><option>Chess</option>
+<option>Fishing</option><option>Hunting</option><option>Marimba</option><option>Drum Majorettes</option>
+</select>
+<div class="err-msg">Please choose a primary sport.</div>
+</div>
+<div class="field">
+<label>Position / discipline</label>
+<input type="text" name="position" placeholder="e.g. Fly-half, 100m sprint, Goalkeeper">
+</div>
+<div class="field">
+<label>Current club / team / academy</label>
+<input type="text" name="current_club">
+</div>
+<div class="field">
+<label>Years playing this sport</label>
+<input type="number" name="years_playing" min="0" max="20">
+</div>
+</div>
+</fieldset>
 
-    <!-- 3. Other sports -->
-    <fieldset>
-      <legend><span class="num">3</span> Other Sports</legend>
-      <p class="hint">Which other sports does your child take part in? Tick all that apply — many athletes are multi-talented.</p>
-      <div class="options" id="otherSports">
-        <label class="opt"><input type="checkbox" name="other_sports" value="Rugby"><span>Rugby</span></label>
-        <label class="opt"><input type="checkbox" name="other_sports" value="Wrestling"><span>Wrestling</span></label>
-        <label class="opt"><input type="checkbox" name="other_sports" value="Soccer / Football"><span>Soccer / Football</span></label>
-        <label class="opt"><input type="checkbox" name="other_sports" value="Cricket"><span>Cricket</span></label>
-        <label class="opt"><input type="checkbox" name="other_sports" value="Athletics"><span>Athletics</span></label>
-        <label class="opt"><input type="checkbox" name="other_sports" value="Tennis"><span>Tennis</span></label>
-        <label class="opt"><input type="checkbox" name="other_sports" value="Swimming"><span>Swimming</span></label>
-        <label class="opt"><input type="checkbox" name="other_sports" value="Netball"><span>Netball</span></label>
-        <label class="opt"><input type="checkbox" name="other_sports" value="Chess"><span>Chess</span></label>
-      </div>
-      <div class="field full" style="margin-top:16px">
-        <label>Any other sport not listed</label>
-        <input type="text" name="other_sports_extra" placeholder="e.g. Hockey, Basketball, Judo">
-      </div>
-    </fieldset>
+<!-- 3. Other sports -->
+<fieldset>
+<legend><span class="num">3</span> Other Sports</legend>
+<p class="hint">Which other sports does your child take part in? Tick all that apply — many athletes are multi-talented.</p>
+<div class="options" id="otherSports">
+<label class="opt"><input type="checkbox" name="other_sports" value="Rugby"><span>Rugby</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Wrestling"><span>Wrestling</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Soccer / Football"><span>Soccer / Football</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Cricket"><span>Cricket</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Athletics"><span>Athletics</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Tennis"><span>Tennis</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Swimming"><span>Swimming</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Netball"><span>Netball</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Dancesport"><span>Dancesport</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Chess"><span>Chess</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Fishing"><span>Fishing</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Hunting"><span>Hunting</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Marimba"><span>Marimba</span></label>
+<label class="opt"><input type="checkbox" name="other_sports" value="Drum Majorettes"><span>Drum Majorettes</span></label>
+</div>
+<div class="field full" style="margin-top:16px">
+<label>Any other sport not listed</label>
+<input type="text" name="other_sports_extra" placeholder="e.g. Hockey, Basketball, Judo">
+</div>
+</fieldset>
 
-    <!-- 4. Level & achievements -->
-    <fieldset>
-      <legend><span class="num">4</span> Level &amp; Achievements</legend>
-      <p class="hint">Give scouts a sense of where your child is on their journey.</p>
-      <div class="field full">
-        <label>Highest level reached (primary sport)</label>
-        <div class="options">
-          <label class="opt"><input type="radio" name="level" value="School"><span>School</span></label>
-          <label class="opt"><input type="radio" name="level" value="Club"><span>Club</span></label>
-          <label class="opt"><input type="radio" name="level" value="District"><span>District</span></label>
-          <label class="opt"><input type="radio" name="level" value="Provincial"><span>Provincial</span></label>
-          <label class="opt"><input type="radio" name="level" value="National"><span>National</span></label>
-        </div>
-      </div>
-      <div class="field full">
-        <label>Notable achievements, honours or representative teams</label>
-        <textarea name="achievements" placeholder="e.g. U15 provincial squad 2025; school 1st team captain; district athletics medal…"></textarea>
-      </div>
-      <div class="grid">
-        <div class="field">
-          <label>Coach name (optional reference)</label>
-          <input type="text" name="coach_name">
-        </div>
-        <div class="field">
-          <label>Coach contact (optional)</label>
-          <input type="text" name="coach_contact" placeholder="Email or phone">
-        </div>
-      </div>
-    </fieldset>
+<!-- 4. Level & achievements -->
+<fieldset>
+<legend><span class="num">4</span> Level &amp; Achievements</legend>
+<p class="hint">Give scouts a sense of where your child is on their journey.</p>
+<div class="field full">
+<label>Highest level reached (primary sport)</label>
+<div class="options">
+<label class="opt"><input type="radio" name="level" value="School"><span>School</span></label>
+<label class="opt"><input type="radio" name="level" value="Club"><span>Club</span></label>
+<label class="opt"><input type="radio" name="level" value="District"><span>District</span></label>
+<label class="opt"><input type="radio" name="level" value="Provincial"><span>Provincial</span></label>
+<label class="opt"><input type="radio" name="level" value="National"><span>National</span></label>
+</div>
+</div>
+<div class="field full">
+<label>Notable achievements, honours or representative teams</label>
+<textarea name="achievements" placeholder="e.g. U15 provincial squad 2025; school 1st team captain; district athletics medal…"></textarea>
+</div>
+<div class="grid">
+<div class="field">
+<label>Coach name (optional reference)</label>
+<input type="text" name="coach_name">
+</div>
+<div class="field">
+<label>Coach contact (optional)</label>
+<input type="text" name="coach_contact" placeholder="Email or phone">
+</div>
+</div>
+</fieldset>
 
-    <!-- 5. Physical (optional) -->
-    <fieldset>
-      <legend><span class="num">5</span> Physical Detail <span style="font-weight:400;font-size:.8rem;color:var(--muted)">(optional)</span></legend>
-      <p class="hint">Helpful for some sports. Skip anything you’d rather not share.</p>
-      <div class="grid">
-        <div class="field">
-          <label>Height (cm)</label>
-          <input type="number" name="height_cm" min="80" max="230">
-        </div>
-        <div class="field">
-          <label>Weight (kg)</label>
-          <input type="number" name="weight_kg" min="20" max="200">
-        </div>
-        <div class="field">
-          <label>Dominant hand / foot</label>
-          <select name="dominant_side">
-            <option value="">Select…</option>
-            <option>Right</option><option>Left</option><option>Both / ambidextrous</option>
-          </select>
-        </div>
-      </div>
-    </fieldset>
+<!-- 5. Physical (optional) -->
+<fieldset>
+<legend><span class="num">5</span> Physical Detail <span style="font-weight:400;font-size:.8rem;color:var(--muted)">(optional)</span></legend>
+<p class="hint">Helpful for some sports. Skip anything you'd rather not share.</p>
+<div class="grid">
+<div class="field">
+<label>Height (cm)</label>
+<input type="number" name="height_cm" min="80" max="230">
+</div>
+<div class="field">
+<label>Weight (kg)</label>
+<input type="number" name="weight_kg" min="20" max="200">
+</div>
+<div class="field">
+<label>Dominant hand / foot</label>
+<select name="dominant_side">
+<option value="">Select…</option>
+<option>Right</option><option>Left</option><option>Both / ambidextrous</option>
+</select>
+</div>
+</div>
+</fieldset>
 
-    <!-- 6. Media -->
-    <fieldset>
-      <legend><span class="num">6</span> Photos &amp; Video</legend>
-      <div class="safe">
-        <span>🔒</span>
-        <div><b>Kept private until approved.</b> Nothing you upload is shown to anyone until our team reviews it. Please use action or sport photos — no school uniforms with visible name badges, and no images of other children.</div>
-      </div>
-      <div class="field full">
-        <label>Upload photos (up to 2)</label>
-        <input type="file" name="photos" accept="image/*" multiple>
-        <div class="hint" style="margin:6px 0 0">JPG or PNG, up to 5 MB each. Action shots work best.</div>
-      </div>
-      <div class="field full">
-        <label>Video links (YouTube, Hudl, Google Drive, etc.)</label>
-        <div id="videoLinks">
-          <input type="url" name="video_link" placeholder="https://youtube.com/..." style="margin-bottom:10px">
-        </div>
-        <button type="button" class="add-link" id="addVideo">+ Add another video link</button>
-      </div>
-    </fieldset>
+<!-- 6. Media -->
+<fieldset>
+<legend><span class="num">6</span> Photos &amp; Video</legend>
+<div class="safe">
+<span>🔒</span>
+<div><b>Kept private until approved.</b> Nothing you upload is shown to anyone until our team reviews it. Please use action or sport photos — no school uniforms with visible name badges, and no images of other children.</div>
+</div>
+<div class="field full">
+<label>Upload photos (up to 2)</label>
+<input type="file" name="photos" accept="image/*" multiple>
+<div class="hint" style="margin:6px 0 0">JPG or PNG, up to 5 MB each. Action shots work best.</div>
+</div>
+<div class="field full">
+<label>Video links (YouTube, Hudl, Google Drive, etc.)</label>
+<div id="videoLinks">
+<input type="url" name="video_link" placeholder="https://youtube.com/..." style="margin-bottom:10px">
+</div>
+<button type="button" class="add-link" id="addVideo">+ Add another video link</button>
+</div>
+</fieldset>
 
-    <!-- 7. Consent -->
-    <fieldset>
-      <legend><span class="num">7</span> Parental Consent (POPIA)</legend>
-      <p class="hint">Required. This protects your child and keeps Scout Republic compliant with South Africa’s POPIA privacy law.</p>
-      <div class="consent">
-        <label class="opt"><input type="checkbox" name="consent_guardian" required><span>I confirm I am the <b>parent or legal guardian</b> of the child named above and am authorised to submit this information. <span class="req">*</span></span></label>
-        <label class="opt"><input type="checkbox" name="consent_process" required><span>I consent to Scout Republic <b>storing and processing</b> this information for the purpose of talent identification and connecting my child with vetted scouts, coaches and academies. <span class="req">*</span></span></label>
-        <label class="opt"><input type="checkbox" name="consent_media" required><span>I consent to <b>approved</b> photos and videos of my child being shown to <b>vetted, verified scouts only</b> — never publicly. <span class="req">*</span></span></label>
-        <label class="opt"><input type="checkbox" name="consent_withdraw" required><span>I understand I can <b>update or withdraw</b> my child’s profile and consent at any time by contacting Scout Republic. <span class="req">*</span></span></label>
-      </div>
-      <div class="grid" style="margin-top:16px">
-        <div class="field">
-          <label>Type your full name as digital signature <span class="req">*</span></label>
-          <input type="text" name="signature" required>
-          <div class="err-msg">Please type your name to sign.</div>
-        </div>
-        <div class="field">
-          <label>Date <span class="req">*</span></label>
-          <input type="date" name="signed_date" required>
-          <div class="err-msg">Please select a date.</div>
-        </div>
-      </div>
-    </fieldset>
+<!-- 7. Consent -->
+<fieldset>
+<legend><span class="num">7</span> Parental Consent (POPIA)</legend>
+<p class="hint">Required. This protects your child and keeps Scout Republic compliant with South Africa's POPIA privacy law.</p>
+<div class="consent">
+<label class="opt"><input type="checkbox" name="consent_guardian" required><span>I confirm I am the <b>parent or legal guardian</b> of the child named above and am authorised to submit this information. <span class="req">*</span></span></label>
+<label class="opt"><input type="checkbox" name="consent_process" required><span>I consent to Scout Republic <b>storing and processing</b> this information for the purpose of talent identification and connecting my child with vetted scouts, coaches and academies. <span class="req">*</span></span></label>
+<label class="opt"><input type="checkbox" name="consent_media" required><span>I consent to <b>approved</b> photos and videos of my child being shown to <b>vetted, verified scouts only</b> — never publicly. <span class="req">*</span></span></label>
+<label class="opt"><input type="checkbox" name="consent_withdraw" required><span>I understand I can <b>update or withdraw</b> my child's profile and consent at any time by contacting Scout Republic. <span class="req">*</span></span></label>
+</div>
+<div class="grid" style="margin-top:16px">
+<div class="field">
+<label>Type your full name as digital signature <span class="req">*</span></label>
+<input type="text" name="signature" required>
+<div class="err-msg">Please type your name to sign.</div>
+</div>
+<div class="field">
+<label>Date <span class="req">*</span></label>
+<input type="date" name="signed_date" required>
+<div class="err-msg">Please select a date.</div>
+</div>
+</div>
+</fieldset>
 
-    <button type="submit" class="submit" id="submitBtn">Submit Athlete Profile</button>
-    <p class="note" id="statusNote">Your information is stored securely in the EU (POPIA-adequate) and never sold or shared publicly.</p>
-  </form>
+<button type="submit" class="submit" id="submitBtn">Submit Athlete Profile</button>
+<p class="note" id="statusNote">Your information is stored securely in the EU (POPIA-adequate) and never sold or shared publicly.</p>
+</form>
 
-  <!-- Success -->
-  <div id="success">
-    <div class="tick">✓</div>
-    <h2>Profile received — thank you!</h2>
-    <p style="color:var(--muted);max-width:440px;margin:0 auto">
-      We’ve received your child’s profile. Our team will review it (usually within 2–3 working days) and let you know once it’s approved. You’ll stay in full control of visibility at every step.
-    </p>
-  </div>
+<!-- Success -->
+<div id="success">
+<div class="tick">✓</div>
+<h2>Profile received — thank you!</h2>
+<p style="color:var(--muted);max-width:440px;margin:0 auto">
+We've received your child's profile. Our team will review it (usually within 2–3 working days) and let you know once it's approved. You'll stay in full control of visibility at every step.
+</p>
+</div>
 
-  <footer>
-    Scout Republic · Talent, safely seen · <a href="https://scoutrepublic.online">scoutrepublic.online</a><br>
-    Questions? Email <a href="mailto:hello@scoutrepublic.online">hello@scoutrepublic.online</a>
-  </footer>
+<footer>
+Scout Republic · Talent, safely seen · <a href="https://scoutrepublic.online">scoutrepublic.online</a><br>
+Questions? Email <a href="mailto:hello@scoutrepublic.online">hello@scoutrepublic.online</a>
+</footer>
 
 </div>
 
 <!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // ---- Supabase config (public anon key — safe in front-end) ----
-  const SUPABASE_URL = "https://lumrdbztczgqlewcoklg.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_Chcfx3KNZcgJhyrHuqFcww_OaH_n8d8";
-  const STORAGE_BUCKET = "athlete-media";
-  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// ---- Supabase config (public anon key — safe in front-end) ----
+const SUPABASE_URL = "https://lumrdbztczgqlewcoklg.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_Chcfx3KNZcgJhyrHuqFcww_OaH_n8d8";
+const STORAGE_BUCKET = "athlete-media";
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  const form = document.getElementById('profileForm');
-  const btn = document.getElementById('submitBtn');
-  const note = document.getElementById('statusNote');
+const form = document.getElementById('profileForm');
+const btn = document.getElementById('submitBtn');
+const note = document.getElementById('statusNote');
 
-  // Default the signed date to today
-  document.querySelector('[name=signed_date]').valueAsDate = new Date();
+// Default the signed date to today
+document.querySelector('[name=signed_date]').valueAsDate = new Date();
 
-  // Add another video link (max 3)
-  document.getElementById('addVideo').addEventListener('click', () => {
-    const box = document.getElementById('videoLinks');
-    if (box.querySelectorAll('input').length >= 3) return;
-    const i = document.createElement('input');
-    i.type = 'url'; i.name = 'video_link';
-    i.placeholder = 'https://...'; i.style.marginBottom = '10px';
-    box.appendChild(i);
-  });
+// Add another video link (max 3)
+document.getElementById('addVideo').addEventListener('click', () => {
+const box = document.getElementById('videoLinks');
+if (box.querySelectorAll('input').length >= 3) return;
+const i = document.createElement('input');
+i.type = 'url'; i.name = 'video_link';
+i.placeholder = 'https://...'; i.style.marginBottom = '10px';
+box.appendChild(i);
+});
 
-  // Simple required-field validation with inline messages
-  function validate(){
-    let ok = true;
-    form.querySelectorAll('[required]').forEach(el => {
-      const field = el.closest('.field');
-      let bad = false;
-      if (el.type === 'checkbox') bad = !el.checked;
-      else if (el.type === 'email') bad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
-      else bad = !el.value.trim();
-      if (field){ field.classList.toggle('invalid', bad); }
-      if (bad) ok = false;
-    });
-    return ok;
-  }
+// Simple required-field validation with inline messages
+function validate(){
+let ok = true;
+form.querySelectorAll('[required]').forEach(el => {
+const field = el.closest('.field');
+let bad = false;
+if (el.type === 'checkbox') bad = !el.checked;
+else if (el.type === 'email') bad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+else bad = !el.value.trim();
+if (field){ field.classList.toggle('invalid', bad); }
+if (bad) ok = false;
+});
+return ok;
+}
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    note.style.color = '';
-    if (!validate()){
-      note.style.color = 'var(--err)';
-      note.textContent = 'Please complete the required fields and tick all consent boxes.';
-      const firstBad = form.querySelector('.field.invalid');
-      if (firstBad) firstBad.scrollIntoView({behavior:'smooth', block:'center'});
-      return;
-    }
+form.addEventListener('submit', async (e) => {
+e.preventDefault();
+note.style.color = '';
+if (!validate()){
+note.style.color = 'var(--err)';
+note.textContent = 'Please complete the required fields and tick all consent boxes.';
+const firstBad = form.querySelector('.field.invalid');
+if (firstBad) firstBad.scrollIntoView({behavior:'smooth', block:'center'});
+return;
+}
 
-    btn.disabled = true;
-    btn.textContent = 'Submitting…';
-    note.textContent = 'Uploading — please keep this page open.';
+btn.disabled = true;
+btn.textContent = 'Submitting…';
+note.textContent = 'Uploading — please keep this page open.';
 
-    try {
-      // 1) Upload photos to Storage (optional)
-      const fd = new FormData(form);
-      const photoPaths = [];
-      const files = form.querySelector('[name=photos]').files;
-      for (let i = 0; i < Math.min(files.length, 2); i++){
-        const f = files[i];
-        if (f.size > 5 * 1024 * 1024) throw new Error(`"${f.name}" is larger than 5 MB.`);
-        const safeName = f.name.replace(/[^a-zA-Z0-9._-]/g,'_');
-        const path = `profiles/${Date.now()}_${i}_${safeName}`;
-        const { error: upErr } = await sb.storage.from(STORAGE_BUCKET).upload(path, f, { upsert:false });
-        if (upErr) throw upErr;
-        photoPaths.push(path);
-      }
+try {
+// 1) Upload photos to Storage (optional)
+const fd = new FormData(form);
+const photoPaths = [];
+const files = form.querySelector('[name=photos]').files;
+for (let i = 0; i < Math.min(files.length, 2); i++){
+const f = files[i];
+if (f.size > 5 * 1024 * 1024) throw new Error(`"${f.name}" is larger than 5 MB.`);
+const safeName = f.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+const path = `profiles/${Date.now()}_${i}_${safeName}`;
+const { error: upErr } = await sb.storage.from(STORAGE_BUCKET).upload(path, f, { upsert:false });
+if (upErr) throw upErr;
+photoPaths.push(path);
+}
 
-      // 2) Collect fields
-      const otherSports = fd.getAll('other_sports');
-      const videoLinks = fd.getAll('video_link').filter(v => v && v.trim());
+// 2) Collect fields
+const otherSports = fd.getAll('other_sports');
+const videoLinks = fd.getAll('video_link').filter(v => v && v.trim());
 
-      const row = {
-        child_first_name: fd.get('child_first_name'),
-        child_surname: fd.get('child_surname'),
-        child_dob: fd.get('child_dob'),
-        relationship: fd.get('relationship'),
-        guardian_first_name: fd.get('guardian_first_name'),
-        guardian_surname: fd.get('guardian_surname'),
-        guardian_email: fd.get('guardian_email'),
-        guardian_phone: fd.get('guardian_phone'),
-        province: fd.get('province') || null,
-        town: fd.get('town') || null,
-        school: fd.get('school') || null,
-        primary_sport: fd.get('primary_sport'),
-        position: fd.get('position') || null,
-        current_club: fd.get('current_club') || null,
-        years_playing: fd.get('years_playing') ? Number(fd.get('years_playing')) : null,
-        other_sports: otherSports,
-        other_sports_extra: fd.get('other_sports_extra') || null,
-        level: fd.get('level') || null,
-        achievements: fd.get('achievements') || null,
-        coach_name: fd.get('coach_name') || null,
-        coach_contact: fd.get('coach_contact') || null,
-        height_cm: fd.get('height_cm') ? Number(fd.get('height_cm')) : null,
-        weight_kg: fd.get('weight_kg') ? Number(fd.get('weight_kg')) : null,
-        dominant_side: fd.get('dominant_side') || null,
-        video_links: videoLinks,
-        photo_paths: photoPaths,
-        consent_guardian: !!fd.get('consent_guardian'),
-        consent_process: !!fd.get('consent_process'),
-        consent_media: !!fd.get('consent_media'),
-        consent_withdraw: !!fd.get('consent_withdraw'),
-        signature: fd.get('signature'),
-        signed_date: fd.get('signed_date')
-      };
+const row = {
+child_first_name: fd.get('child_first_name'),
+child_surname: fd.get('child_surname'),
+child_dob: fd.get('child_dob'),
+relationship: fd.get('relationship'),
+guardian_first_name: fd.get('guardian_first_name'),
+guardian_surname: fd.get('guardian_surname'),
+guardian_email: fd.get('guardian_email'),
+guardian_phone: fd.get('guardian_phone'),
+province: fd.get('province') || null,
+town: fd.get('town') || null,
+school: fd.get('school') || null,
+primary_sport: fd.get('primary_sport'),
+position: fd.get('position') || null,
+current_club: fd.get('current_club') || null,
+years_playing: fd.get('years_playing') ? Number(fd.get('years_playing')) : null,
+other_sports: otherSports,
+other_sports_extra: fd.get('other_sports_extra') || null,
+level: fd.get('level') || null,
+achievements: fd.get('achievements') || null,
+coach_name: fd.get('coach_name') || null,
+coach_contact: fd.get('coach_contact') || null,
+height_cm: fd.get('height_cm') ? Number(fd.get('height_cm')) : null,
+weight_kg: fd.get('weight_kg') ? Number(fd.get('weight_kg')) : null,
+dominant_side: fd.get('dominant_side') || null,
+video_links: videoLinks,
+photo_paths: photoPaths,
+consent_guardian: !!fd.get('consent_guardian'),
+consent_process: !!fd.get('consent_process'),
+consent_media: !!fd.get('consent_media'),
+consent_withdraw: !!fd.get('consent_withdraw'),
+signature: fd.get('signature'),
+signed_date: fd.get('signed_date')
+};
 
-      // 3) Insert row
-      const { error: insErr } = await sb.from('athlete_profiles').insert([row]);
-      if (insErr) throw insErr;
+// 3) Insert row
+const { error: insErr } = await sb.from('athlete_profiles').insert([row]);
+if (insErr) throw insErr;
 
-      // 4) Success
-      form.style.display = 'none';
-      document.getElementById('success').style.display = 'block';
-      document.getElementById('success').scrollIntoView({behavior:'smooth', block:'start'});
+// 4) Success
+form.style.display = 'none';
+document.getElementById('success').style.display = 'block';
+document.getElementById('success').scrollIntoView({behavior:'smooth', block:'start'});
 
-    } catch (err){
-      console.error(err);
-      btn.disabled = false;
-      btn.textContent = 'Submit Athlete Profile';
-      note.style.color = 'var(--err)';
-      note.textContent = 'Sorry — something went wrong: ' + (err.message || 'please try again, or email hello@scoutrepublic.online.');
-    }
-  });
+} catch (err){
+console.error(err);
+btn.disabled = false;
+btn.textContent = 'Submit Athlete Profile';
+note.style.color = 'var(--err)';
+note.textContent = 'Sorry — something went wrong: ' + (err.message || 'please try again, or email hello@scoutrepublic.online.');
+}
+});
 </script>
 </body>
 </html>
