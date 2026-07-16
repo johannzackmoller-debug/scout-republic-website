@@ -235,8 +235,10 @@ footer a{color:var(--navy)}
 
 <!-- 2. Primary sport -->
 <fieldset>
-<legend><span class="num">2</span> Primary Sport</legend>
-<p class="hint">The main sport you'd like scouts to consider your child for.</p>
+<legend><span class="num">2</span> Sport(s)</legend>
+<p class="hint">The main sport you'd like scouts to consider your child for. You can add a second sport too, each with its own detail.</p>
+
+<div style="margin:0 0 10px"><b style="color:var(--navy);font-size:.95rem">Sport 1 (Primary)</b></div>
 <div class="grid">
 <div class="field">
 <label>Primary sport <span class="req">*</span></label>
@@ -250,16 +252,6 @@ footer a{color:var(--navy)}
 <div class="err-msg">Please choose a primary sport.</div>
 </div>
 <div class="field">
-<label>Secondary sport <span style="font-weight:400;font-size:.8rem;color:var(--muted)">(optional)</span></label>
-<select name="secondary_sport">
-<option value="">None / not applicable</option>
-<option>Rugby</option><option>Wrestling</option><option>Soccer / Football</option>
-<option>Cricket</option><option>Athletics</option><option>Tennis</option>
-<option>Swimming</option><option>Netball</option><option>Dancesport</option><option>Chess</option>
-<option>Fishing</option><option>Hunting</option><option>Marimba</option><option>Drum Majorettes</option>
-</select>
-</div>
-<div class="field">
 <label>Position / discipline</label>
 <input type="text" name="position" placeholder="e.g. Fly-half, 100m sprint, Goalkeeper">
 </div>
@@ -270,6 +262,32 @@ footer a{color:var(--navy)}
 <div class="field">
 <label>Years playing this sport</label>
 <input type="number" name="years_playing" min="0" max="20">
+</div>
+</div>
+
+<div style="margin:18px 0 10px;padding-top:14px;border-top:1px solid var(--line)"><b style="color:var(--navy);font-size:.95rem">Sport 2 (Secondary)</b> <span style="font-weight:400;font-size:.8rem;color:var(--muted)">— optional</span></div>
+<div class="grid">
+<div class="field">
+<label>Secondary sport</label>
+<select name="secondary_sport">
+<option value="">None / not applicable</option>
+<option>Rugby</option><option>Wrestling</option><option>Soccer / Football</option>
+<option>Cricket</option><option>Athletics</option><option>Tennis</option>
+<option>Swimming</option><option>Netball</option><option>Dancesport</option><option>Chess</option>
+<option>Fishing</option><option>Hunting</option><option>Marimba</option><option>Drum Majorettes</option>
+</select>
+</div>
+<div class="field">
+<label>Position / discipline</label>
+<input type="text" name="secondary_position" placeholder="e.g. Fly-half, 100m sprint, Goalkeeper">
+</div>
+<div class="field">
+<label>Current club / team / academy</label>
+<input type="text" name="secondary_current_club">
+</div>
+<div class="field">
+<label>Years playing this sport</label>
+<input type="number" name="secondary_years_playing" min="0" max="20">
 </div>
 </div>
 </fieldset>
@@ -506,10 +524,13 @@ province: fd.get('province') || null,
 town: fd.get('town') || null,
 school: fd.get('school') || null,
 primary_sport: fd.get('primary_sport'),
-secondary_sport: fd.get('secondary_sport') || null,
 position: fd.get('position') || null,
 current_club: fd.get('current_club') || null,
 years_playing: fd.get('years_playing') ? Number(fd.get('years_playing')) : null,
+secondary_sport: fd.get('secondary_sport') || null,
+secondary_position: fd.get('secondary_position') || null,
+secondary_current_club: fd.get('secondary_current_club') || null,
+secondary_years_playing: fd.get('secondary_years_playing') ? Number(fd.get('secondary_years_playing')) : null,
 other_sports: otherSports,
 other_sports_extra: fd.get('other_sports_extra') || null,
 level: fd.get('level') || null,
